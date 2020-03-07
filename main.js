@@ -63,7 +63,8 @@ window.onload = () => {
         this.right() < item.left() ||
         this.left() > item.right()
       );
-    }
+    },
+    
   };
   class Item {
     constructor(posX) {
@@ -103,16 +104,45 @@ window.onload = () => {
     itemArr.forEach(item => {
       
       if (player.crashWith(item)) {
-        setTimeout(() => {
-          alert("Item picked");
-        }, 0);
-        gameRunning=false
+        // setTimeout(() => {
+        //   alert("Item picked");
+        // }, 0);
+        draw2()
+        //gameRunning=false
       }
       item.update();
     });
+    player.update()
 
     window.requestAnimationFrame(draw);
   };
+  let counter = 0;
+  let obstaclesArr = [];
+
+  let draw2 = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      counter++;
+      obstaclesArr.forEach(e => {
+          if (player.crashWith(e)) {
+              //runningGame = false;
+              gameRunning=false
+          }
+          e.update();
+      });
+      //player.update();
+
+      if (counter % 120 === 0) {
+          let randomPox = Math.floor(Math.random() * (400 - 50) + 50);
+          let randomPox1 = Math.floor(Math.random() * (400 - 50) + 50);
+          if (randomPox <= 450 && randomPox1 <= 450 && randomPox != randomPox1) {
+              obstaclesArr.push(new Item(randomPox));
+              obstaclesArr.push(new Item(randomPox1));
+          }
+      }
+
+      window.requestAnimationFrame(draw);
+  };
+
   document.onkeydown = event => {
     if (event.key === "ArrowRight") {
       player.arrowRight();
