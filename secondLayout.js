@@ -73,7 +73,7 @@ window.onload = () => {
         constructor(posX) {
             this.x = posX;
             this.y = 0;
-            this.width = 100;
+            this.width = 150;
             this.height = 50;
             this.color = 'red';
             this.speedY = 2;
@@ -101,7 +101,7 @@ window.onload = () => {
         constructor(posX) {
             this.x = posX;
             this.y = 0;
-            this.width = 100;
+            this.width = 150;
             this.height = 50;
             this.color = 'blue';
             this.speedY = 2;
@@ -130,7 +130,7 @@ window.onload = () => {
     let obstaclesArr = [];
     let winObj = null
 
-    let draw = () => {
+    let draw3 = () => {
         if (!runningGame) {
             return;
         }
@@ -173,7 +173,7 @@ window.onload = () => {
         }
 
 
-        window.requestAnimationFrame(draw);
+        window.requestAnimationFrame(draw3);
     };
     // Function for moving player right, left, up, down
 
@@ -196,6 +196,6 @@ window.onload = () => {
     };
     // start game function
     function startGame() {
-        draw();
+        draw3();
     }
 };
