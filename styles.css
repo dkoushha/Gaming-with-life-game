@@ -1,19 +1,26 @@
-#game-board{
+#game-board {
     height: 150vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     align-content: center;
-    
+
 }
-#canvas{
-    border: 1px solid red;  
+
+#canvas {
+    /* border: 1px solid red; */
 }
-header{
+
+header {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    align-content: center; 
-    
+    align-content: center;
+
     margin-bottom: 50px;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
 }
