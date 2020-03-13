@@ -15,14 +15,14 @@ let player = {
   height: 200,
   img: new Image(),
   // to move the player to the right
-  rightPressed: function() {
+  rightPressed: function () {
     // to keep it inside the canvas
-    if (this.x < 900 - this.width) {
+    if (this.x < 1100 - this.width) {
       this.x += 30;
     }
   },
   // to move the player to the left
-  leftPressed: function() {
+  leftPressed: function () {
     // to keep it inside the canvas
     if (this.x >= 50) {
       this.x -= 30;
@@ -39,7 +39,7 @@ let player = {
   //     }
   //   },
   // to draw the player on the canvas
-  update: function() {
+  update: function () {
     // ctx.fillRect(this.x, this.y, this.width, this.height);
     this.img.src = "images/pikeman.png";
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -47,20 +47,20 @@ let player = {
     // ctx.fillRect(this.x, this.y, this.width, this.height);
   },
   // declare the player borders
-  left: function() {
+  left: function () {
     return this.x;
   },
-  top: function() {
+  top: function () {
     return this.y;
   },
-  right: function() {
+  right: function () {
     return this.x + this.width;
   },
-  bottom: function() {
+  bottom: function () {
     return this.y + this.height;
   },
   // to check if the player collide with the objects
-  crash: function(object) {
+  crash: function (object) {
     return !(
       this.bottom() < object.top() ||
       this.top() > object.bottom() ||
@@ -107,7 +107,8 @@ class object {
     return this.x + this.width;
   }
   crash(object) {
-    return !(this.right() < object.left() || this.left() > object.right());
+    return !(this.right() < object.left() ||
+      this.left() > object.right())
   }
 }
 
@@ -204,14 +205,14 @@ function removeObject(objectsArr) {
   }
 }
 
-function IsObjectThere(objectsArr, x) {
-  objectsArr.forEach(e => {
-    if (x === e.x || x === e.x + 250) {
-      return true;
-    }
-  });
-  return false;
-}
+// function IsObjectThere(objectsArr, x) {
+//   objectsArr.forEach(e => {
+//     if (x === e.x || x === e.x + 250) {
+//       return true;
+//     }
+//   });
+//   return false;
+// }
 
 // function to draw the game on canvas
 let draw = () => {
@@ -235,6 +236,7 @@ let draw = () => {
   // declare the index inside the array for the crash object
   let ind;
   objectsArr.forEach((e, i) => {
+
     if (player.crash(e)) {
       // add the score
       scores[e.scoreType] += 1;
@@ -253,54 +255,81 @@ let draw = () => {
   function randomObject() {
     // random X position
     // Creat a random object with random position
-    while (1) {
-      let randomPoX = Math.floor(Math.random() * (1700 - 200) + 100);
-      if (!IsObjectThere(objectsArr, randomPoX)) {
-        switch (Math.floor(Math.random() * 4)) {
-          case 1:
-            return new objectMoney(randomPoX);
-          case 2:
-            return new objectHealth(randomPoX);
-          case 3:
-            return new objectLove(randomPoX);
-          default:
-            return new objectLeisure(randomPoX);
-        }
-      }
+    // while (1) {
+    let randomPoX = Math.floor(Math.random() * (1100 - 200) + 100);
+    // if (!IsObjectThere(objectsArr, randomPoX)) {
+    switch (Math.floor(Math.random() * 4)) {
+      case 1:
+        return new objectMoney(randomPoX);
+      case 2:
+        return new objectHealth(randomPoX);
+      case 3:
+        return new objectLove(randomPoX);
+      default:
+        return new objectLeisure(randomPoX);
     }
+    // }
+    // }
   }
 
   // draw 4 random objects on canvas
   if (counter % 120 === 0) {
     // for loop to great more than one object
-    for (i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       let newObject = randomObject();
       objectsArr.push(newObject);
     }
+    // if (object.crash(newObject)) {
+    //   console.log(newObject.x)
+    // }
+    // console.log("outPut: draw -> newObject", newObject)
+    //console.log(objectMoney.x, newObject.x)
+    // console.log(objectsArr[0].crash(objectsArr[1]))
   }
+  // for (i = 1; i < objectsArr.length; i++) {
+  //   if (itemMoney[i].crash(itemHealth)) {
+  //     console.log("outPut: draw -> objectsArr[i + 1]", objectsArr[i + 1])
+  //     console.log("Crash is there")
+  //   }
 
-  removeObject(objectsArr);
+}
 
-  // if (counter === 400) {
-  //     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
-  //     if (randomPoxWin <= 450) {
-  //         winObj = new winObject(randomPoxWin)
-  //     }
-  // }
-  // if (winObj !== null) {
-  //     winObj.update()
-  //     if (player.crash(winObj)) {
-  //         main.startGame()
+// let secondNewObject = randomObject()
+// if (!secondNewObject.crash(newObject)) {
+//   objectsArr.push(secondNewObject)
+// }
+// let thirdNewObject = randomObject()
+// if (!thirdNewObject.crash(newObject) || !thirdNewObject.crash(secondNewObject)) {
+//   objectsArr.push(thirdNewObject)
+// }
 
-  //     }
-  // }
 
-  window.requestAnimationFrame(draw);
+removeObject(objectsArr);
+
+// if (counter === 400) {
+//     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
+//     if (randomPoxWin <= 450) {
+//         winObj = new winObject(randomPoxWin)
+//     }
+// }
+// if (winObj !== null) {
+//     winObj.update()
+//     if (player.crash(winObj)) {
+//         main.startGame()
+
+//     }
+// }
+drawMiddleAndAxis()
+drawItemMoney(scores.money)
+drawItemLove(scores.love)
+drawItemHealth(scores.health)
+drawItemLeisure(scores.leisure)
+window.requestAnimationFrame(draw);
 };
 
 // Function for moving player right, left, up, down
 
-document.onkeydown = function(e) {
+document.onkeydown = function (e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
