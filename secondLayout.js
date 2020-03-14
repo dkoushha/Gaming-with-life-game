@@ -1,4 +1,8 @@
 let cheese = "lactose intolerant";
+window.onload = () => {
+  let newText = new text(texty, 100, 100, 35)
+  newText.update(100)
+}
 document.getElementById("start-button").onclick = () => {
   startGame();
 };
@@ -230,14 +234,6 @@ function crashesWithAnything(obj) {
   }
   return false;
 }
-// function IsObjectThere(objectsArr, x) {
-//   objectsArr.forEach(e => {
-//     if (x === e.x || x === e.x + 250) {
-//       return true;
-//     }
-//   });
-//   return false;
-// }
 
 
 
@@ -246,10 +242,14 @@ let draw = () => {
   if (!runningGame) {
     return;
   }
+
+
   // clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // increase the counter
   counter++;
+
+
   //   drawing background image
   let bgImg = new Image();
   bgImg.src = "images/794.jpg";
@@ -300,7 +300,6 @@ let draw = () => {
   }
 
 
-
   // draw 4 random objects on canvas
   if (counter % 120 === 0) {
     // for loop to great more than one object
@@ -311,73 +310,66 @@ let draw = () => {
         objectsArr.push(newObject);
       }
     }
-    // if (object.crash(newObject)) {
-    //   console.log(newObject.x)
-    // }
-    // console.log("outPut: draw -> newObject", newObject)
-    //console.log(objectMoney.x, newObject.x)
-    // console.log(objectsArr[0].crash(objectsArr[1]))
+
   }
-  // for (i = 1; i < objectsArr.length; i++) {
-  //   if (itemMoney[i].crash(itemHealth)) {
-  //     console.log("outPut: draw -> objectsArr[i + 1]", objectsArr[i + 1])
-  //     console.log("Crash is there")
-  //   }
 
 
+  removeObject(objectsArr);
 
-// let secondNewObject = randomObject()
-// if (!secondNewObject.crash(newObject)) {
-//   objectsArr.push(secondNewObject)
-// }
-// let thirdNewObject = randomObject()
-// if (!thirdNewObject.crash(newObject) || !thirdNewObject.crash(secondNewObject)) {
-//   objectsArr.push(thirdNewObject)
-// }
+  // if (counter === 400) {
+  //     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
+  //     if (randomPoxWin <= 450) {
+  //         winObj = new winObject(randomPoxWin)
+  //     }
+  // }
+  // if (winObj !== null) {
+  //     winObj.update()
+  //     if (player.crash(winObj)) {
+  //         main.startGame()
 
+  //     }
+  // }
+  drawMiddleAndAxis()
+  if (scores.money <= 10) {
+    drawItemMoney(scores.money)
+  } else {
+    drawItemMoney(10)
+  }
+  if (scores.love <= 10) {
+    drawItemLove(scores.love)
+  } else {
+    drawItemLove(10)
+  }
+  if (scores.health <= 10) {
+    drawItemHealth(scores.health)
+  } else {
+    drawItemHealth(10)
+  }
+  if (scores.leisure <= 10) {
+    drawItemLeisure(scores.leisure)
+  } else {
+    drawItemLeisure(10)
+  }
 
-removeObject(objectsArr);
+  if (scores.money === 10 && scores.love === 10 && scores.health === 10 && scores.leisure === 10) {
+    alert("Won the game")
+  }
+  if (counter % 2400 === 0) {
+    if (scores.money != 0) {
+      scores.money -= 1
+    }
+    if (scores.love != 0) {
+      scores.love -= 1
+    }
+    if (scores.health != 0) {
+      scores.health -= 1
+    }
+    if (scores.leisure != 0) {
+      scores.leisure -= 1
+    }
+  }
 
-// if (counter === 400) {
-//     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
-//     if (randomPoxWin <= 450) {
-//         winObj = new winObject(randomPoxWin)
-//     }
-// }
-// if (winObj !== null) {
-//     winObj.update()
-//     if (player.crash(winObj)) {
-//         main.startGame()
-
-//     }
-// }
-drawMiddleAndAxis()
-if(scores.money<=10 ){
-  drawItemMoney(scores.money)
-}else{
-  drawItemMoney(10)
-}
-if(scores.love<=10){
-  drawItemLove(scores.love)
-}else{
-  drawItemLove(10)
-}
-if(scores.health<=10){
-  drawItemHealth(scores.health)
-}else{
-  drawItemHealth(10)
-}
-if(scores.leisure<=10){
-  drawItemLeisure(scores.leisure)
-}else{
-  drawItemLeisure(10)
-}
-
-if(scores.money===10 && scores.love===10 && scores.health===10 && scores.leisure===10){
-  alert("Won the game")
-}
-
-window.requestAnimationFrame(draw);
+  window.requestAnimationFrame(draw);
 };
 
 // Function for moving player right, left, up, down
