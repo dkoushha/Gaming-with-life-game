@@ -5,6 +5,9 @@ document.getElementById("start-button").onclick = () => {
 // Getting the canvas from html page
 let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
+
+var heightRatio = 1;
+canvas.height = canvas.width * heightRatio;
 // For ending the game
 let runningGame = true;
 // Create player object
@@ -17,30 +20,31 @@ let player = {
   // to move the player to the right
   rightPressed: function () {
     // to keep it inside the canvas
-    if (this.x < 1100 - this.width) {
+    if (this.x < 1400 - this.width) {
       this.x += 30;
     }
   },
   // to move the player to the left
   leftPressed: function () {
     // to keep it inside the canvas
-    if (this.x >= 50) {
+    if (this.x >= 100) {
       this.x -= 30;
     }
   },
-  //   upPressed: function() {
-  //     if (this.y >= 50) {
-  //       this.y -= 15;
-  //     }
-  //   },
-  //   downPressed: function() {
-  //     if (this.y <= 400) {
-  //       this.y += 15;
-  //     }
-  //   },
+  upPressed: function () {
+    if (this.y >= 50) {
+      this.y -= 30;
+    }
+  },
+  downPressed: function () {
+    if (this.y <= 600) {
+      this.y += 30;
+    }
+  },
   // to draw the player on the canvas
   update: function () {
     // ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.fillStyle = 'red'
     this.img.src = "images/pikeman.png";
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     // ctx.fillStyle = "black";
@@ -82,13 +86,13 @@ class object {
   constructor(posX) {
     this.x = posX;
     this.y = 0;
-    this.width = 50;
-    this.height = 50;
+    this.width = 60;
+    this.height = 60;
     this.speedY = 2;
   }
   // draw the object on canvas
   update() {
-    // ctx.fillStyle = this.color;
+    ctx.fillStyle = this.color;
     // ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     this.y += this.speedY;
@@ -118,7 +122,10 @@ class objectMoney extends object {
     super(posX);
     this.color = "green";
     this.img = new Image();
-    this.img.src = "images/robber.png";
+    this.imgSrc = ["images/work/robber.png", "images/work/cash.png", "images/work/cook.png",
+      "images/work/keyboard.png"
+    ];
+    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)]
     this.scoreType = "money";
   }
 }
@@ -128,7 +135,10 @@ class objectHealth extends object {
     super(posX);
     this.color = "blue";
     this.img = new Image();
-    this.img.src = "images/strong-man.png";
+    this.imgSrc = ["images/health/strong-man.png", "images/health/avocado.png", "images/health/canned-fish.png", "images/health/cycling.png",
+      "images/health/hot-meal.png", "images/health/jumping-rope.png", "images/health/skier.png"
+    ]
+    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)]
     this.scoreType = "health";
   }
 }
@@ -139,18 +149,22 @@ class objectLove extends object {
     super(posX);
     this.color = "red";
     this.img = new Image();
-    this.img.src = "images/headshot.png";
+    this.imgSrc = ["images/love/headshot.png", "images/love/heart-organ.png", "images/love/paw-heart.png"]
+    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)]
     this.scoreType = "love";
   }
 }
 
 // subclass for the leisure object
-class objectLeisure extends object {
+class objectEntertainment extends object {
   constructor(posX) {
     super(posX);
     this.color = "yellow";
     this.img = new Image();
-    this.img.src = "images/juggler.png";
+    this.imgSrc = ["images/coffee-beans.png", "images/airplane-departure.png", "images/console-controller.png", "images/medieval-pavilion.png",
+      "images/musical-score.png", "images/popcorn.png", "images/tv.png", "images/wine-glass.png"
+    ]
+    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)]
     this.scoreType = "leisure";
   }
 }
@@ -196,6 +210,7 @@ let scores = {
   love: 0
 };
 
+// function to remove objects from the objects array when they reach the end of the canvas
 function removeObject(objectsArr) {
   for (let i = 0; i < objectsArr.length; i++) {
     if (objectsArr[i].y >= 750) {
@@ -205,14 +220,18 @@ function removeObject(objectsArr) {
   }
 }
 
-// function IsObjectThere(objectsArr, x) {
-//   objectsArr.forEach(e => {
-//     if (x === e.x || x === e.x + 250) {
-//       return true;
-//     }
-//   });
-//   return false;
-// }
+// function to check if the new generated object collied with any of the objects arry items to avoid 
+// objects overlapping 
+function crashesWithAnything(obj) {
+  for (i = 0; i < objectsArr.length; i++) {
+    if (obj.crash(objectsArr[i])) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
 
 // function to draw the game on canvas
 let draw = () => {
@@ -256,7 +275,7 @@ let draw = () => {
     // random X position
     // Creat a random object with random position
     // while (1) {
-    let randomPoX = Math.floor(Math.random() * (1100 - 200) + 100);
+    let randomPoX = Math.floor(Math.random() * (1300 - 200) + 300);
     // if (!IsObjectThere(objectsArr, randomPoX)) {
     switch (Math.floor(Math.random() * 4)) {
       case 1:
@@ -266,65 +285,48 @@ let draw = () => {
       case 3:
         return new objectLove(randomPoX);
       default:
-        return new objectLeisure(randomPoX);
+        return new objectEntertainment(randomPoX);
     }
     // }
     // }
   }
+
+
 
   // draw 4 random objects on canvas
   if (counter % 120 === 0) {
     // for loop to great more than one object
     for (let i = 0; i < 4; i++) {
       let newObject = randomObject();
-      objectsArr.push(newObject);
+      // if it doesn't collied with any other object to add it to the array 
+      if (!crashesWithAnything(newObject)) {
+        objectsArr.push(newObject);
+      }
     }
-    // if (object.crash(newObject)) {
-    //   console.log(newObject.x)
-    // }
-    // console.log("outPut: draw -> newObject", newObject)
-    //console.log(objectMoney.x, newObject.x)
-    // console.log(objectsArr[0].crash(objectsArr[1]))
   }
-  // for (i = 1; i < objectsArr.length; i++) {
-  //   if (itemMoney[i].crash(itemHealth)) {
-  //     console.log("outPut: draw -> objectsArr[i + 1]", objectsArr[i + 1])
-  //     console.log("Crash is there")
-  //   }
-
-}
-
-// let secondNewObject = randomObject()
-// if (!secondNewObject.crash(newObject)) {
-//   objectsArr.push(secondNewObject)
-// }
-// let thirdNewObject = randomObject()
-// if (!thirdNewObject.crash(newObject) || !thirdNewObject.crash(secondNewObject)) {
-//   objectsArr.push(thirdNewObject)
-// }
 
 
-removeObject(objectsArr);
+  removeObject(objectsArr);
 
-// if (counter === 400) {
-//     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
-//     if (randomPoxWin <= 450) {
-//         winObj = new winObject(randomPoxWin)
-//     }
-// }
-// if (winObj !== null) {
-//     winObj.update()
-//     if (player.crash(winObj)) {
-//         main.startGame()
+  // if (counter === 400) {
+  //     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
+  //     if (randomPoxWin <= 450) {
+  //         winObj = new winObject(randomPoxWin)
+  //     }
+  // }
+  // if (winObj !== null) {
+  //     winObj.update()
+  //     if (player.crash(winObj)) {
+  //         main.startGame()
 
-//     }
-// }
-drawMiddleAndAxis()
-drawItemMoney(scores.money)
-drawItemLove(scores.love)
-drawItemHealth(scores.health)
-drawItemLeisure(scores.leisure)
-window.requestAnimationFrame(draw);
+  //     }
+  // }
+  drawMiddleAndAxis()
+  drawItemMoney(scores.money)
+  drawItemLove(scores.love)
+  drawItemHealth(scores.health)
+  drawItemLeisure(scores.leisure)
+  window.requestAnimationFrame(draw);
 };
 
 // Function for moving player right, left, up, down
