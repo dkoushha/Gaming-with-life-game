@@ -131,3 +131,7 @@ let drawItemLeisure = (score) => {
 
 
 
+// ctx.font = "18px serif";
+// ctx.fillStyle = "black";
+// ctx.fillText("Score ", 220, 255); //+points
+// ctx.closePath();
