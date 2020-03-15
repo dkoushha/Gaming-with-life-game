@@ -16,6 +16,7 @@ class text {
         let j = 0;
         let typeText = setInterval(() => {
             let letterWidth = ctx.measureText(this.string.charAt(i)).width;
+            console.log(letterWidth);
             if (this.x + letterWidth >= canvas.width - this.lineStartX) {
                 this.x = this.lineStartX;
                 this.y += this.lineHeight;
