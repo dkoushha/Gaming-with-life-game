@@ -25,7 +25,7 @@ let player = {
   // to move the player to the right
   rightPressed: function() {
     // to keep it inside the canvas
-    if (this.x < 1200 - this.width) {
+    if (this.x < canvas.width - this.width) {
       this.x += 30;
     }
   },
@@ -57,16 +57,16 @@ let player = {
   },
   // declare the player borders
   left: function() {
-    return this.x;
+    return this.x+20;
   },
   top: function() {
-    return this.y;
+    return this.y+20;
   },
   right: function() {
-    return this.x + this.width;
+    return (this.x + this.width)-20;
   },
   bottom: function() {
-    return this.y + this.height;
+    return (this.y + this.height)-20;
   },
   // to check if the player collide with the objects
   crash: function(object) {
@@ -295,7 +295,10 @@ let draw = () => {
   objectsArr.forEach((e, i) => {
     if (player.crash(e)) {
       // add the score
-      scores[e.scoreType] += 1;
+      if(scores[e.scoreType]<=9){
+        scores[e.scoreType] += 1;
+        console.log(scores[e.scoreType]);
+      } 
       // get the index of the object in the array
       ind = i;
       if (e.scoreType == "obstacles") {
@@ -354,13 +357,13 @@ let draw = () => {
       // if it doesn't collied with any other object to add it to the array
       if (!crashesWithAnything(newObject)) {
         objectsArr.push(newObject);
-        for (let i = 0; i < objectsArr.length; i++) {
-          //player.crash(objectsArr[i])
-          if (objectsArr[i].scoreType == "obstacles") {
-            //runningGame=false
-            console.log(objectsArr[i].scoreType);
-          }
-        }
+        // for (let i = 0; i < objectsArr.length; i++) {
+        //   //player.crash(objectsArr[i])
+        //   if (objectsArr[i].scoreType == "obstacles") {
+        //     //runningGame=false
+        //     console.log(objectsArr[i].scoreType);
+        //   }
+        // }
       }
     }
 
@@ -387,24 +390,17 @@ let draw = () => {
   drawMiddleAndAxis();
   if (scores.money <= 10) {
     drawItemMoney(scores.money);
-  } else {
-    drawItemMoney(10);
-  }
+  } 
   if (scores.love <= 10) {
     drawItemLove(scores.love);
-  } else {
-    drawItemLove(10);
-  }
+  } 
   if (scores.health <= 10) {
     drawItemHealth(scores.health);
-  } else {
-    drawItemHealth(10);
-  }
+  } 
   if (scores.entertainment <= 10) {
     drawItemLeisure(scores.entertainment);
-  } else {
-    drawItemLeisure(10);
-  }
+  } 
+  
 
   if (
     scores.money >= 10 &&
