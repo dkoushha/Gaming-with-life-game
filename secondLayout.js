@@ -23,31 +23,31 @@ let player = {
   height: 200,
   img: new Image(),
   // to move the player to the right
-  rightPressed: function() {
+  rightPressed: function () {
     // to keep it inside the canvas
     if (this.x < canvas.width - this.width) {
       this.x += 30;
     }
   },
   // to move the player to the left
-  leftPressed: function() {
+  leftPressed: function () {
     // to keep it inside the canvas
     if (this.x >= 0) {
       this.x -= 30;
     }
   },
-  upPressed: function() {
+  upPressed: function () {
     if (this.y >= 50) {
       this.y -= 30;
     }
   },
-  downPressed: function() {
+  downPressed: function () {
     if (this.y <= 600) {
       this.y += 30;
     }
   },
   // to draw the player on the canvas
-  update: function() {
+  update: function () {
     // ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.fillStyle = "red";
     this.img.src = "images/pikeman.png";
@@ -69,7 +69,7 @@ let player = {
     return (this.y + this.height)-20;
   },
   // to check if the player collide with the objects
-  crash: function(object) {
+  crash: function (object) {
     return !(
       this.bottom() < object.top() ||
       this.top() > object.bottom() ||
@@ -205,34 +205,7 @@ class obstacles extends object {
     this.scoreType = "obstacles";
   }
 }
-// class winObject {
-//     constructor(posX) {
-//         this.x = posX;
-//         this.y = 0;
-//         this.width = 100;
-//         this.height = 50;
-//         this.color = 'blue';
-//         this.speedY = 2;
-//     }
-//     update() {
-//         ctx.fillStyle = this.color;
-//         ctx.fillRect(this.x, this.y, this.width, this.height);
-//         this.y += 2;
-//     }
-//     top() {
-//         return this.y - 8;
-//     }
-//     left() {
-//         return this.x - 8;
-//     }
-//     bottom() {
-//         return this.y + this.height - 8;
-//     }
-//     right() {
-//         return this.x + this.width - 8;
-//     }
-// }
-// let winObj = null
+
 
 // declare the counter
 let counter = 0;
@@ -266,10 +239,31 @@ function crashesWithAnything(obj) {
   }
   return false;
 }
+let winGame=true
+let draw2 = () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  let bgImg = new Image();
+  bgImg.src = "images/794.jpg";
+  ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+  if(!runningGame && !winGame){
+    let winImg = new Image();
+    winImg.src = "images/youwin.png";
+    ctx.drawImage(winImg, 550, 200, 400, 400);
+  }else{
+    //CHANGE IMAGEEEEE
+    let winImg = new Image();
+    winImg.src = "images/bully-minion.png";
+    ctx.drawImage(winImg, 550, 200, 400, 400);
+  }
+  
+  window.requestAnimationFrame(draw2);
+}
+
 
 // function to draw the game on canvas
 let draw = () => {
   if (!runningGame) {
+    draw2()
     return;
   }
 
@@ -313,16 +307,7 @@ let draw = () => {
   if (ind !== undefined) {
     objectsArr.splice(ind, 1);
   }
-  // obstaclesArr.forEach(e=>{
-  //   if(player.crash(e)){
-  //     //An image can be used instead
-  //     ctx.font = "20px serif";
-  //     ctx.fillStyle = "blue";
-  //     ctx.fillText("Game Over", 200, 350);
-  //     runningGame=false
-  //   }
-  //   e.update()
-  // })
+
 
   // function to get random X position and creat random objects
   function randomObject() {
@@ -372,19 +357,7 @@ let draw = () => {
 
   removeObject(objectsArr);
 
-  // if (counter === 400) {
-  //     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
-  //     if (randomPoxWin <= 450) {
-  //         winObj = new winObject(randomPoxWin)
-  //     }
-  // }
-  // if (winObj !== null) {
-  //     winObj.update()
-  //     if (player.crash(winObj)) {
-  //         main.startGame()
 
-  //     }
-  // }
 
   //Draw the Items when picked in the pie chart
   drawMiddleAndAxis();
@@ -410,9 +383,7 @@ let draw = () => {
   ) {
     console.log("winner");
     //Draw winning image
-    let winImg = new Image();
-    winImg.src = "images/youwin.png";
-    ctx.drawImage(winImg, 600, 350, 400, 400);
+    winGame=false
     runningGame = false;
   }
   //Every 40 seconds the score will go down by one on every section
@@ -433,9 +404,10 @@ let draw = () => {
   window.requestAnimationFrame(draw);
 };
 
+
 // Function for moving player right, left, up, down
 
-document.onkeydown = function(e) {
+document.onkeydown = function (e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
