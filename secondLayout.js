@@ -1,4 +1,10 @@
 let cheese = "lactose intolerant";
+window.onload = () => {
+  let title = new text(gameName, 650, 100, 50)
+  title.updateTitle()
+  let newText = new text(gameStory, 100, 200, 40)
+  newText.update(100)
+}
 document.getElementById("start-button").onclick = () => {
   startGame();
 };
@@ -6,8 +12,7 @@ document.getElementById("start-button").onclick = () => {
 let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
 
-var heightRatio = 1;
-canvas.height = canvas.width * heightRatio;
+
 // For ending the game
 let runningGame = true;
 // Create player object
@@ -261,24 +266,20 @@ function crashesWithAnything(obj) {
   }
   return false;
 }
-// function IsObjectThere(objectsArr, x) {
-//   objectsArr.forEach(e => {
-//     if (x === e.x || x === e.x + 250) {
-//       return true;
-//     }
-//   });
-//   return false;
-// }
 
 // function to draw the game on canvas
 let draw = () => {
   if (!runningGame) {
     return;
   }
+
+
   // clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // increase the counter
   counter++;
+
+
   //   drawing background image
   let bgImg = new Image();
   bgImg.src = "images/794.jpg";
@@ -344,6 +345,7 @@ let draw = () => {
     // }
   }
 
+
   // draw 4 random objects on canvas
   if (counter % 120 === 0) {
     // for loop to great more than one object
@@ -361,27 +363,9 @@ let draw = () => {
         }
       }
     }
-    // if (object.crash(newObject)) {
-    //   console.log(newObject.x)
-    // }
-    // console.log("outPut: draw -> newObject", newObject)
-    //console.log(objectMoney.x, newObject.x)
-    // console.log(objectsArr[0].crash(objectsArr[1]))
-  }
-  // for (i = 1; i < objectsArr.length; i++) {
-  //   if (itemMoney[i].crash(itemHealth)) {
-  //     console.log("outPut: draw -> objectsArr[i + 1]", objectsArr[i + 1])
-  //     console.log("Crash is there")
-  //   }
 
-  // let secondNewObject = randomObject()
-  // if (!secondNewObject.crash(newObject)) {
-  //   objectsArr.push(secondNewObject)
-  // }
-  // let thirdNewObject = randomObject()
-  // if (!thirdNewObject.crash(newObject) || !thirdNewObject.crash(secondNewObject)) {
-  //   objectsArr.push(thirdNewObject)
-  // }
+  }
+
 
   removeObject(objectsArr);
 
