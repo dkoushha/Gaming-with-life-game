@@ -77,14 +77,8 @@ let player = {
       this.left() > object.right()
     );
   }
-  // win: function (winObj) {
-  //     return (
-  //         this.bottom() < winObj.top() ||
-  //         this.top() > winObj.bottom() ||
-  //         this.right() < winObj.left() ||
-  //         this.left() > winObj.right()
-  //     );
-  // }
+
+
 };
 // Create object class
 class object {
@@ -93,7 +87,6 @@ class object {
     this.y = 0;
     this.width = 60;
     this.height = 60;
-    this.speedY = 2;
   }
   // draw the object on canvas
   update() {
@@ -134,6 +127,9 @@ class objectMoney extends object {
     ];
     this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
     this.scoreType = "money";
+    // add speed Y to change the speed later
+    this.speedY = 2;
+
   }
 }
 // subclass for the health object
@@ -153,6 +149,9 @@ class objectHealth extends object {
     ];
     this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
     this.scoreType = "health";
+    // add speed Y to change the speed later
+    this.speedY = 2;
+
   }
 }
 
@@ -169,6 +168,9 @@ class objectLove extends object {
     ];
     this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
     this.scoreType = "love";
+    // add speed Y to change the speed later
+    this.speedY = 3;
+
   }
 }
 
@@ -190,6 +192,9 @@ class objectEntertainment extends object {
     ];
     this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
     this.scoreType = "entertainment";
+    // add speed Y to change the speed later
+    this.speedY = 3;
+
   }
 }
 
@@ -203,6 +208,8 @@ class obstacles extends object {
     this.img = new Image();
     this.img.src = "images/bully-minion.png";
     this.scoreType = "obstacles";
+    this.speedY = 2;
+
   }
 }
 
@@ -244,7 +251,7 @@ let draw2 = () => {
   let winImg = new Image();
   winImg.src = "images/youwin.png";
   ctx.drawImage(winImg, 600, 350, 400, 400);
-  window.requestAnimationFrame(draw);
+  window.requestAnimationFrame(draw2);
 
 }
 
@@ -254,7 +261,6 @@ let draw = () => {
     draw2()
     return;
   }
-
 
   // clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -322,7 +328,7 @@ let draw = () => {
   // draw 4 random objects on canvas
   if (counter % 120 === 0) {
     // for loop to great more than one object
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 3; i++) {
       let newObject = randomObject();
       // if it doesn't collied with any other object to add it to the array
       if (!crashesWithAnything(newObject)) {
@@ -339,11 +345,20 @@ let draw = () => {
 
   }
 
+  // change the speed of objects at specific time
+  if (counter % 330 === 0) {
+    // for loop inside the objects array to change y speed
+    objectsArr.forEach((e) => {
+      if (e.speedY === 2) {
+        e.speedY = 3
+      }
+      if (e.speedY === 3) {
+        e.speedY = 2
+      }
+    })
+  }
 
   removeObject(objectsArr);
-
-
-
   //Draw the Items when picked in the pie chart
   drawMiddleAndAxis();
   if (scores.money <= 10) {
