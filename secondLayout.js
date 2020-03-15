@@ -1,6 +1,8 @@
 let cheese = "lactose intolerant";
 window.onload = () => {
-  let newText = new text(texty, 100, 100, 35)
+  let title = new text(gameName, 650, 100, 50)
+  title.updateTitle()
+  let newText = new text(gameStory, 100, 200, 40)
   newText.update(100)
 }
 document.getElementById("start-button").onclick = () => {
@@ -10,8 +12,7 @@ document.getElementById("start-button").onclick = () => {
 let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
 
-var heightRatio = 1;
-canvas.height = canvas.width * heightRatio;
+
 // For ending the game
 let runningGame = true;
 // Create player object
@@ -354,7 +355,7 @@ let draw = () => {
   if (scores.money === 10 && scores.love === 10 && scores.health === 10 && scores.leisure === 10) {
     alert("Won the game")
   }
-  if (counter % 2400 === 0) {
+  if (counter % 500 === 0) {
     if (scores.money != 0) {
       scores.money -= 1
     }
