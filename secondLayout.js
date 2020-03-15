@@ -18,53 +18,53 @@ let player = {
   height: 200,
   img: new Image(),
   // to move the player to the right
-  rightPressed: function () {
+  rightPressed: function() {
     // to keep it inside the canvas
-    if (this.x < 1400 - this.width) {
+    if (this.x < 1200 - this.width) {
       this.x += 30;
     }
   },
   // to move the player to the left
-  leftPressed: function () {
+  leftPressed: function() {
     // to keep it inside the canvas
-    if (this.x >= 100) {
+    if (this.x >= 0) {
       this.x -= 30;
     }
   },
-  upPressed: function () {
+  upPressed: function() {
     if (this.y >= 50) {
       this.y -= 30;
     }
   },
-  downPressed: function () {
+  downPressed: function() {
     if (this.y <= 600) {
       this.y += 30;
     }
   },
   // to draw the player on the canvas
-  update: function () {
+  update: function() {
     // ctx.fillRect(this.x, this.y, this.width, this.height);
-    ctx.fillStyle = 'red'
+    ctx.fillStyle = "red";
     this.img.src = "images/pikeman.png";
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     // ctx.fillStyle = "black";
     // ctx.fillRect(this.x, this.y, this.width, this.height);
   },
   // declare the player borders
-  left: function () {
+  left: function() {
     return this.x;
   },
-  top: function () {
+  top: function() {
     return this.y;
   },
-  right: function () {
+  right: function() {
     return this.x + this.width;
   },
-  bottom: function () {
+  bottom: function() {
     return this.y + this.height;
   },
   // to check if the player collide with the objects
-  crash: function (object) {
+  crash: function(object) {
     return !(
       this.bottom() < object.top() ||
       this.top() > object.bottom() ||
@@ -111,8 +111,7 @@ class object {
     return this.x + this.width;
   }
   crash(object) {
-    return !(this.right() < object.left() ||
-      this.left() > object.right())
+    return !(this.right() < object.left() || this.left() > object.right());
   }
 }
 
@@ -122,10 +121,13 @@ class objectMoney extends object {
     super(posX);
     this.color = "green";
     this.img = new Image();
-    this.imgSrc = ["images/work/robber.png", "images/work/cash.png", "images/work/cook.png",
+    this.imgSrc = [
+      "images/work/robber.png",
+      "images/work/cash.png",
+      "images/work/cook.png",
       "images/work/keyboard.png"
     ];
-    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)]
+    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
     this.scoreType = "money";
   }
 }
@@ -135,10 +137,16 @@ class objectHealth extends object {
     super(posX);
     this.color = "blue";
     this.img = new Image();
-    this.imgSrc = ["images/health/strong-man.png", "images/health/avocado.png", "images/health/canned-fish.png", "images/health/cycling.png",
-      "images/health/hot-meal.png", "images/health/jumping-rope.png", "images/health/skier.png"
-    ]
-    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)]
+    this.imgSrc = [
+      "images/health/strong-man.png",
+      "images/health/avocado.png",
+      "images/health/canned-fish.png",
+      "images/health/cycling.png",
+      "images/health/hot-meal.png",
+      "images/health/jumping-rope.png",
+      "images/health/skier.png"
+    ];
+    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
     this.scoreType = "health";
   }
 }
@@ -149,8 +157,12 @@ class objectLove extends object {
     super(posX);
     this.color = "red";
     this.img = new Image();
-    this.imgSrc = ["images/love/headshot.png", "images/love/heart-organ.png", "images/love/paw-heart.png"]
-    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)]
+    this.imgSrc = [
+      "images/love/headshot.png",
+      "images/love/heart-organ.png",
+      "images/love/paw-heart.png"
+    ];
+    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
     this.scoreType = "love";
   }
 }
@@ -161,14 +173,33 @@ class objectEntertainment extends object {
     super(posX);
     this.color = "yellow";
     this.img = new Image();
-    this.imgSrc = ["images/coffee-beans.png", "images/airplane-departure.png", "images/console-controller.png", "images/medieval-pavilion.png",
-      "images/musical-score.png", "images/popcorn.png", "images/tv.png", "images/wine-glass.png"
-    ]
-    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)]
-    this.scoreType = "leisure";
+    this.imgSrc = [
+      "images/coffee-beans.png",
+      "images/airplane-departure.png",
+      "images/console-controller.png",
+      "images/medieval-pavilion.png",
+      "images/musical-score.png",
+      "images/popcorn.png",
+      "images/tv.png",
+      "images/wine-glass.png"
+    ];
+    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
+    this.scoreType = "entertainment";
   }
 }
 
+class obstacles extends object {
+  constructor(posX) {
+    super(posX);
+    //this.color="black"
+    this.width = 150;
+    this.height = 150;
+    this.speedX = 2;
+    this.img = new Image();
+    this.img.src = "images/bully-minion.png";
+    this.scoreType = "obstacles";
+  }
+}
 // class winObject {
 //     constructor(posX) {
 //         this.x = posX;
@@ -206,7 +237,7 @@ let objectsArr = [];
 let scores = {
   money: 0,
   health: 0,
-  leisure: 0,
+  entertainment: 0,
   love: 0
 };
 
@@ -220,8 +251,8 @@ function removeObject(objectsArr) {
   }
 }
 
-// function to check if the new generated object collied with any of the objects arry items to avoid 
-// objects overlapping 
+// function to check if the new generated object collied with any of the objects arry items to avoid
+// objects overlapping
 function crashesWithAnything(obj) {
   for (i = 0; i < objectsArr.length; i++) {
     if (obj.crash(objectsArr[i])) {
@@ -238,8 +269,6 @@ function crashesWithAnything(obj) {
 //   });
 //   return false;
 // }
-
-
 
 // function to draw the game on canvas
 let draw = () => {
@@ -263,12 +292,15 @@ let draw = () => {
   // declare the index inside the array for the crash object
   let ind;
   objectsArr.forEach((e, i) => {
-
     if (player.crash(e)) {
       // add the score
       scores[e.scoreType] += 1;
       // get the index of the object in the array
       ind = i;
+      if (e.scoreType == "obstacles") {
+        console.log("loser");
+        runningGame = false;
+      }
     }
     // draw the object in the array
     e.update();
@@ -277,38 +309,56 @@ let draw = () => {
   if (ind !== undefined) {
     objectsArr.splice(ind, 1);
   }
+  // obstaclesArr.forEach(e=>{
+  //   if(player.crash(e)){
+  //     //An image can be used instead
+  //     ctx.font = "20px serif";
+  //     ctx.fillStyle = "blue";
+  //     ctx.fillText("Game Over", 200, 350);
+  //     runningGame=false
+  //   }
+  //   e.update()
+  // })
 
   // function to get random X position and creat random objects
   function randomObject() {
     // random X position
     // Creat a random object with random position
     // while (1) {
-    let randomPoX = Math.floor(Math.random() * (1300 - 200) + 300);
+    let randomPoX = Math.floor(Math.random() * (canvas.width - 150));
     // if (!IsObjectThere(objectsArr, randomPoX)) {
-    switch (Math.floor(Math.random() * 4)) {
+    //to create more obstacles just multiply by more than 4
+    switch (Math.floor(Math.random() * 6)) {
       case 1:
         return new objectMoney(randomPoX);
       case 2:
         return new objectHealth(randomPoX);
       case 3:
         return new objectLove(randomPoX);
-      default:
+      case 4:
         return new objectEntertainment(randomPoX);
+      default:
+        return new obstacles(randomPoX);
     }
     // }
     // }
   }
-
-
 
   // draw 4 random objects on canvas
   if (counter % 120 === 0) {
     // for loop to great more than one object
     for (let i = 0; i < 4; i++) {
       let newObject = randomObject();
-      // if it doesn't collied with any other object to add it to the array 
+      // if it doesn't collied with any other object to add it to the array
       if (!crashesWithAnything(newObject)) {
         objectsArr.push(newObject);
+        for (let i = 0; i < objectsArr.length; i++) {
+          //player.crash(objectsArr[i])
+          if (objectsArr[i].scoreType == "obstacles") {
+            //runningGame=false
+            console.log(objectsArr[i].scoreType);
+          }
+        }
       }
     }
     // if (object.crash(newObject)) {
@@ -324,65 +374,88 @@ let draw = () => {
   //     console.log("Crash is there")
   //   }
 
+  // let secondNewObject = randomObject()
+  // if (!secondNewObject.crash(newObject)) {
+  //   objectsArr.push(secondNewObject)
+  // }
+  // let thirdNewObject = randomObject()
+  // if (!thirdNewObject.crash(newObject) || !thirdNewObject.crash(secondNewObject)) {
+  //   objectsArr.push(thirdNewObject)
+  // }
 
+  removeObject(objectsArr);
 
-// let secondNewObject = randomObject()
-// if (!secondNewObject.crash(newObject)) {
-//   objectsArr.push(secondNewObject)
-// }
-// let thirdNewObject = randomObject()
-// if (!thirdNewObject.crash(newObject) || !thirdNewObject.crash(secondNewObject)) {
-//   objectsArr.push(thirdNewObject)
-// }
+  // if (counter === 400) {
+  //     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
+  //     if (randomPoxWin <= 450) {
+  //         winObj = new winObject(randomPoxWin)
+  //     }
+  // }
+  // if (winObj !== null) {
+  //     winObj.update()
+  //     if (player.crash(winObj)) {
+  //         main.startGame()
 
+  //     }
+  // }
 
-removeObject(objectsArr);
+  //Draw the Items when picked in the pie chart
+  drawMiddleAndAxis();
+  if (scores.money <= 10) {
+    drawItemMoney(scores.money);
+  } else {
+    drawItemMoney(10);
+  }
+  if (scores.love <= 10) {
+    drawItemLove(scores.love);
+  } else {
+    drawItemLove(10);
+  }
+  if (scores.health <= 10) {
+    drawItemHealth(scores.health);
+  } else {
+    drawItemHealth(10);
+  }
+  if (scores.entertainment <= 10) {
+    drawItemLeisure(scores.entertainment);
+  } else {
+    drawItemLeisure(10);
+  }
 
-// if (counter === 400) {
-//     let randomPoxWin = Math.floor(Math.random() * (400 - 50) + 50);
-//     if (randomPoxWin <= 450) {
-//         winObj = new winObject(randomPoxWin)
-//     }
-// }
-// if (winObj !== null) {
-//     winObj.update()
-//     if (player.crash(winObj)) {
-//         main.startGame()
-
-//     }
-// }
-drawMiddleAndAxis()
-if(scores.money<=10 ){
-  drawItemMoney(scores.money)
-}else{
-  drawItemMoney(10)
-}
-if(scores.love<=10){
-  drawItemLove(scores.love)
-}else{
-  drawItemLove(10)
-}
-if(scores.health<=10){
-  drawItemHealth(scores.health)
-}else{
-  drawItemHealth(10)
-}
-if(scores.leisure<=10){
-  drawItemLeisure(scores.leisure)
-}else{
-  drawItemLeisure(10)
-}
-
-if(scores.money===10 && scores.love===10 && scores.health===10 && scores.leisure===10){
-  alert("Won the game")
-}
-
-window.requestAnimationFrame(draw);
+  if (
+    scores.money >= 10 &&
+    scores.love >= 10 &&
+    scores.health >= 10 &&
+    scores.entertainment >= 10
+  ) {
+    console.log("winner");
+    //Draw winning image
+    let winImg = new Image();
+    winImg.src = "images/youwin.png";
+    ctx.drawImage(winImg, 600, 350, 400, 400);
+    runningGame = false;
+  }
+  //Every 40 seconds the score will go down by one on every section
+  if (counter % 2400 === 0) {
+    if (scores.money != 0) {
+      scores.money -= 1;
+    }
+    if (scores.love != 0) {
+      scores.love -= 1;
+    }
+    if (scores.health != 0) {
+      scores.health -= 1;
+    }
+    if (scores.leisure != 0) {
+      scores.leisure -= 1;
+    }
+  }
+  window.requestAnimationFrame(draw);
 };
 
 // Function for moving player right, left, up, down
 
-document.onkeydown = function (e) {
+document.onkeydown = function(e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
