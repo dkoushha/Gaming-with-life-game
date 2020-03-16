@@ -199,17 +199,28 @@ class objectEntertainment extends object {
 }
 
 class obstacles extends object {
-  constructor(posX) {
-    super(posX);
+  constructor(posY) {
+    super();
+    this.y=posY
+    this.x=0
     //this.color="black"
     this.width = 150;
     this.height = 150;
     this.speedX = 2;
     this.img = new Image();
-    this.img.src = "images/bully-minion.png";
+    this.imgSrc=["/images/animation/Run (1).png","/images/animation/Run (2).png","/images/animation/Run (3).png",
+    "/images/animation/Run (4).png","/images/animation/Run (5).png","/images/animation/Run (6).png",
+    "/images/animation/Run (7).png","/images/animation/Run (8).png"]
+    
+    // this.img.src = "images/bully-minion.png";
     this.scoreType = "obstacles";
-    this.speedY = 2;
-
+    // this.speedY = 2;
+  }
+  update(){
+    // Override update form parent to make enemies move horizontal
+    //this.img.src=this.imgSrc[0]
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    this.x += this.speedX;
   }
 }
 
@@ -257,16 +268,15 @@ let draw2 = () => {
     winImg.src = "images/youwin.png";
     ctx.drawImage(winImg, 550, 200, 400, 400);
   } else {
-    //CHANGE IMAGEEEEE
     let winImg = new Image();
-    winImg.src = "images/bully-minion.png";
+    winImg.src = "images/gameover.jpg";
     ctx.drawImage(winImg, 550, 200, 400, 400);
   }
 
   window.requestAnimationFrame(draw2);
 }
-
-
+//Animation frames
+let animationFrame=0
 // function to draw the game on canvas
 let draw = () => {
   if (!runningGame) {
@@ -278,8 +288,7 @@ let draw = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // increase the counter
   counter++;
-
-
+  
   //   drawing background image
   let bgImg = new Image();
   bgImg.src = "images/794.jpg";
@@ -306,8 +315,18 @@ let draw = () => {
         runningGame = false;
       }
     }
+    
     // draw the object in the array
-    e.update();
+    if (e.scoreType == "obstacles"){
+      //Animation frame counter
+      animationFrame=++animationFrame%e.imgSrc.length
+      e.img.src=e.imgSrc[animationFrame]
+      e.update();  
+    }
+    else{
+      e.update();
+    }
+    
   });
   // delete the object from the array to clear from the screen
   if (ind !== undefined) {
@@ -321,9 +340,10 @@ let draw = () => {
     // Creat a random object with random position
     // while (1) {
     let randomPoX = Math.floor(Math.random() * (canvas.width - 150));
+    let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
     // if (!IsObjectThere(objectsArr, randomPoX)) {
     //to create more obstacles just multiply by more than 4
-    switch (Math.floor(Math.random() * 6)) {
+    switch (Math.floor(Math.random() * 5)) {
       case 1:
         return new objectMoney(randomPoX);
       case 2:
@@ -333,7 +353,7 @@ let draw = () => {
       case 4:
         return new objectEntertainment(randomPoX);
       default:
-        return new obstacles(randomPoX);
+        return new obstacles(randomPoY);
     }
     // }
     // }
