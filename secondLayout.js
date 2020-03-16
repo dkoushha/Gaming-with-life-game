@@ -1,17 +1,32 @@
 let cheese = "lactose intolerant";
 window.onload = () => {
-  let title = new text(gameName, 650, 100, 50)
-  title.updateTitle()
-  let newText = new text(gameStory, 100, 200, 40)
-  newText.update(100)
-}
+  ctx.drawImage(this.img3, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(this.img4, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(this.img5, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(this.img1, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(this.img2, 0, 0, canvas.width, canvas.height);
+  let title = new text(gameName, 650, 100, 50);
+  title.updateTitle();
+  let newText = new text(gameStory, 100, 250, 40);
+  newText.update(100);
+};
+img1 = new Image();
+img1.src = "images/l4_buildings01.png";
+img2 = new Image();
+img2.src = "images/l7_lamps.png";
+img3 = new Image();
+img3.src = "images/l1_background.png";
+img4 = new Image();
+img4.src = "images/l2_stars.png";
+img5 = new Image();
+img4.src = "images/l3_moon.png";
+
 document.getElementById("start-button").onclick = () => {
   startGame();
 };
 // Getting the canvas from html page
 let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
-
 
 // For ending the game
 let runningGame = true;
@@ -23,53 +38,51 @@ let player = {
   height: 200,
   img: new Image(),
   // to move the player to the right
-  rightPressed: function () {
+  rightPressed: function() {
     // to keep it inside the canvas
     if (this.x < canvas.width - this.width) {
       this.x += 30;
     }
   },
   // to move the player to the left
-  leftPressed: function () {
+  leftPressed: function() {
     // to keep it inside the canvas
     if (this.x >= 0) {
       this.x -= 30;
     }
   },
-  upPressed: function () {
+  upPressed: function() {
     if (this.y >= 50) {
       this.y -= 30;
     }
   },
-  downPressed: function () {
+  downPressed: function() {
     if (this.y <= 600) {
       this.y += 30;
     }
   },
   // to draw the player on the canvas
-  update: function () {
+  update: function() {
     // ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.fillStyle = "red";
     this.img.src = "images/pikeman.png";
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    // ctx.fillStyle = "black";
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
   },
   // declare the player borders
-  left: function () {
+  left: function() {
     return this.x + 20;
   },
-  top: function () {
+  top: function() {
     return this.y + 20;
   },
-  right: function () {
-    return (this.x + this.width) - 20;
+  right: function() {
+    return this.x + this.width - 20;
   },
-  bottom: function () {
-    return (this.y + this.height) - 20;
+  bottom: function() {
+    return this.y + this.height - 20;
   },
   // to check if the player collide with the objects
-  crash: function (object) {
+  crash: function(object) {
     return !(
       this.bottom() < object.top() ||
       this.top() > object.bottom() ||
@@ -77,8 +90,6 @@ let player = {
       this.left() > object.right()
     );
   }
-
-
 };
 // Create object class
 class object {
@@ -91,7 +102,6 @@ class object {
   // draw the object on canvas
   update() {
     ctx.fillStyle = this.color;
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     this.y += this.speedY;
   }
@@ -129,7 +139,6 @@ class objectMoney extends object {
     this.scoreType = "money";
     // add speed Y to change the speed later
     this.speedY = 2;
-
   }
 }
 // subclass for the health object
@@ -151,7 +160,6 @@ class objectHealth extends object {
     this.scoreType = "health";
     // add speed Y to change the speed later
     this.speedY = 2;
-
   }
 }
 
@@ -170,7 +178,6 @@ class objectLove extends object {
     this.scoreType = "love";
     // add speed Y to change the speed later
     this.speedY = 3;
-
   }
 }
 
@@ -194,7 +201,6 @@ class objectEntertainment extends object {
     this.scoreType = "entertainment";
     // add speed Y to change the speed later
     this.speedY = 3;
-
   }
 }
 
@@ -223,7 +229,6 @@ class obstacles extends object {
     this.x += this.speedX;
   }
 }
-
 
 // declare the counter
 let counter = 0;
@@ -257,16 +262,22 @@ function crashesWithAnything(obj) {
   }
   return false;
 }
-let winGame = true
+
+let winGame = true;
+
+// draw function for the page after winning or losing the game
 let draw2 = () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // draw the bg
   let bgImg = new Image();
-  bgImg.src = "images/794.jpg";
+  bgImg.src = "images/city04-01.png";
   ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+  // draw img if the player won
   if (!runningGame && !winGame) {
     let winImg = new Image();
     winImg.src = "images/youwin.png";
     ctx.drawImage(winImg, 550, 200, 400, 400);
+    // draw another img if the player lost
   } else {
     let winImg = new Image();
     winImg.src = "images/gameover.jpg";
@@ -280,7 +291,7 @@ let animationFrame=0
 // function to draw the game on canvas
 let draw = () => {
   if (!runningGame) {
-    draw2()
+    draw2();
     return;
   }
 
@@ -289,9 +300,10 @@ let draw = () => {
   // increase the counter
   counter++;
   
+
   //   drawing background image
   let bgImg = new Image();
-  bgImg.src = "images/794.jpg";
+  bgImg.src = "images/city04-01.png";
   ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 
   // draw the player
@@ -306,7 +318,6 @@ let draw = () => {
       // add the score
       if (scores[e.scoreType] <= 9) {
         scores[e.scoreType] += 1;
-        console.log(scores[e.scoreType]);
       }
       // get the index of the object in the array
       ind = i;
@@ -333,14 +344,13 @@ let draw = () => {
     objectsArr.splice(ind, 1);
   }
 
-
   // function to get random X position and creat random objects
   function randomObject() {
     // random X position
     // Creat a random object with random position
     // while (1) {
     let randomPoX = Math.floor(Math.random() * (canvas.width - 150));
-    let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
+    // let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
     // if (!IsObjectThere(objectsArr, randomPoX)) {
     //to create more obstacles just multiply by more than 4
     switch (Math.floor(Math.random() * 5)) {
@@ -350,17 +360,12 @@ let draw = () => {
         return new objectHealth(randomPoX);
       case 3:
         return new objectLove(randomPoX);
-      case 4:
-        return new objectEntertainment(randomPoX);
       default:
-        return new obstacles(randomPoY);
+        return new objectEntertainment(randomPoX);
     }
-    // }
-    // }
   }
 
-
-  // draw 4 random objects on canvas
+  // draw 3 random objects on canvas
   if (counter % 120 === 0) {
     // for loop to great more than one object
     for (let i = 0; i < 3; i++) {
@@ -368,32 +373,39 @@ let draw = () => {
       // if it doesn't collied with any other object to add it to the array
       if (!crashesWithAnything(newObject)) {
         objectsArr.push(newObject);
-        // for (let i = 0; i < objectsArr.length; i++) {
-        //   //player.crash(objectsArr[i])
-        //   if (objectsArr[i].scoreType == "obstacles") {
-        //     //runningGame=false
-        //     console.log(objectsArr[i].scoreType);
-        //   }
-        // }
       }
     }
-
   }
 
   // change the speed of objects at specific time
   if (counter % 330 === 0) {
-    // for loop inside the objects array to change y speed
-    objectsArr.forEach((e) => {
+    // loop inside the objects array to change y speed
+    objectsArr.forEach(e => {
       if (e.speedY === 2) {
-        e.speedY = 3
+        e.speedY = 3;
       }
       if (e.speedY === 3) {
-        e.speedY = 2
+        e.speedY = 2;
       }
-    })
+    });
   }
 
+  if (counter % 500 === 0) {
+    // for loop to great more than one object
+    let randomPoX = Math.floor(Math.random() * (canvas.width - 150));
+    let newObject = new obstacles(randomPoX);
+    // if it doesn't collied with any other object to add it to the array
+    objectsArr.push(newObject);
+  }
+
+  // to remove the objects from the array after going outside the canvas
   removeObject(objectsArr);
+  if(counter%700===0){
+    let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
+    let newObstacle= new obstacles(randomPoY)
+    objectsArr.push(newObstacle)
+    console.log(newObstacle);
+  }
   //Draw the Items when picked in the pie chart
   drawMiddleAndAxis();
   if (scores.money <= 10) {
@@ -409,7 +421,7 @@ let draw = () => {
     drawItemLeisure(scores.entertainment);
   }
 
-
+  // to win the game
   if (
     scores.money >= 10 &&
     scores.love >= 10 &&
@@ -418,7 +430,7 @@ let draw = () => {
   ) {
     console.log("winner");
     //Draw winning image
-    winGame = false
+    winGame = false;
     runningGame = false;
   }
   //Every 40 seconds the score will go down by one on every section
@@ -439,10 +451,9 @@ let draw = () => {
   window.requestAnimationFrame(draw);
 };
 
-
 // Function for moving player right, left, up, down
 
-document.onkeydown = function (e) {
+document.onkeydown = function(e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
