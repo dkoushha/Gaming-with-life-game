@@ -10,31 +10,35 @@ class text {
         this.lineStartX = x;
         this.img = new Image();
         this.img.src = "images/pikeman.png";
+
     }
     update(speed) {
         let i = -30;
         let j = 0;
         let typeText = setInterval(() => {
             let letterWidth = ctx.measureText(this.string.charAt(i)).width;
-            console.log(letterWidth);
             if (this.x + letterWidth >= canvas.width - this.lineStartX) {
                 this.x = this.lineStartX;
                 this.y += this.lineHeight;
             }
             if (j >= 30) {
+                ctx.fillStyle = "#B1B3B3FF"
                 ctx.font = "40px Arial";
                 ctx.fillText(this.string.charAt(i), this.x, this.y);
             }
             j++;
             i++;
             this.x += letterWidth;
-            
+
             if (i === this.string.length) {
                 console.log("object");
                 ctx.drawImage(this.img, 600, 600, 200, 200);
 
                 clearInterval(typeText);
             }
+
+
+
         }, speed);
     }
     updateTitle() {
