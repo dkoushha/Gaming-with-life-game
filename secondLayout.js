@@ -1,239 +1,47 @@
-let cheese = "lactose intolerant";
 window.onload = () => {
-  ctx.drawImage(this.img3, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(this.img4, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(this.img5, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(this.img1, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(this.img2, 0, 0, canvas.width, canvas.height);
-  let title = new text(gameName, 650, 100, 50);
-  title.updateTitle();
+  ctx.drawImage(this.imgBg, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(this.imgStars, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(this.imgBuilding, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(this.imgLamps, 0, 0, canvas.width, canvas.height);
+  // let title = new text(gameName, 550 - (gameName.length / 2), 100, 50);
+  // title.updateTitle();
   let newText = new text(gameStory, 100, 250, 40);
   newText.update(100);
 };
-img1 = new Image();
-img1.src = "images/l4_buildings01.png";
-img2 = new Image();
-img2.src = "images/l7_lamps.png";
-img3 = new Image();
-img3.src = "images/l1_background.png";
-img4 = new Image();
-img4.src = "images/l2_stars.png";
-img5 = new Image();
-img4.src = "images/l3_moon.png";
+imgBuilding = new Image();
+imgBuilding.src = "images/l4_buildings01.png";
+imgLamps = new Image();
+imgLamps.src = "images/l7_lamps.png";
+imgBg = new Image();
+imgBg.src = "images/l1_background.png";
+imgStars = new Image();
+imgStars.src = "images/l2_stars.png";
+imgSun = new Image();
+imgSun.src = "images/l2_sun.png";
+imgClouds = new Image();
+imgClouds.src = "images/l4_clouds.png";
 
-document.getElementById("start-button").onclick = () => {
-  startGame();
-};
+// document.getElementById("start-button").onclick = () => {
+//   startGame();
+// };
 // Getting the canvas from html page
 let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
 
 // For ending the game
 let runningGame = true;
-// Create player object
-let player = {
-  x: canvas.width / 2 - 200,
-  y: 600,
-  width: 200,
-  height: 200,
-  img: new Image(),
-  // to move the player to the right
-  rightPressed: function() {
-    // to keep it inside the canvas
-    if (this.x < canvas.width - this.width) {
-      this.x += 30;
-    }
-  },
-  // to move the player to the left
-  leftPressed: function() {
-    // to keep it inside the canvas
-    if (this.x >= 0) {
-      this.x -= 30;
-    }
-  },
-  upPressed: function() {
-    if (this.y >= 50) {
-      this.y -= 30;
-    }
-  },
-  downPressed: function() {
-    if (this.y <= 600) {
-      this.y += 30;
-    }
-  },
-  // to draw the player on the canvas
-  update: function() {
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
-    ctx.fillStyle = "red";
-    this.img.src = "images/pikeman.png";
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  },
-  // declare the player borders
-  left: function() {
-    return this.x + 20;
-  },
-  top: function() {
-    return this.y + 20;
-  },
-  right: function() {
-    return this.x + this.width - 20;
-  },
-  bottom: function() {
-    return this.y + this.height - 20;
-  },
-  // to check if the player collide with the objects
-  crash: function(object) {
-    return !(
-      this.bottom() < object.top() ||
-      this.top() > object.bottom() ||
-      this.right() < object.left() ||
-      this.left() > object.right()
-    );
-  }
-};
-// Create object class
-class object {
-  constructor(posX) {
-    this.x = posX;
-    this.y = 0;
-    this.width = 60;
-    this.height = 60;
-  }
-  // draw the object on canvas
-  update() {
-    ctx.fillStyle = this.color;
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    this.y += this.speedY;
-  }
-  // declare the player borders
-  top() {
-    return this.y;
-  }
-  left() {
-    return this.x;
-  }
-  bottom() {
-    return this.y + this.height;
-  }
-  right() {
-    return this.x + this.width;
-  }
-  crash(object) {
-    return !(this.right() < object.left() || this.left() > object.right());
-  }
-}
+// for winning the game
+let winGame = true;
 
-// subclass for the money object
-class objectMoney extends object {
-  constructor(posX) {
-    super(posX);
-    this.color = "green";
-    this.img = new Image();
-    this.imgSrc = [
-      "images/work/robber.png",
-      "images/work/cash.png",
-      "images/work/cook.png",
-      "images/work/keyboard.png"
-    ];
-    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
-    this.scoreType = "money";
-    // add speed Y to change the speed later
-    this.speedY = 2;
-  }
-}
-// subclass for the health object
-class objectHealth extends object {
-  constructor(posX) {
-    super(posX);
-    this.color = "blue";
-    this.img = new Image();
-    this.imgSrc = [
-      "images/health/strong-man.png",
-      "images/health/avocado.png",
-      "images/health/canned-fish.png",
-      "images/health/cycling.png",
-      "images/health/hot-meal.png",
-      "images/health/jumping-rope.png",
-      "images/health/skier.png"
-    ];
-    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
-    this.scoreType = "health";
-    // add speed Y to change the speed later
-    this.speedY = 2;
-  }
-}
-
-// subclass for the love object
-class objectLove extends object {
-  constructor(posX) {
-    super(posX);
-    this.color = "red";
-    this.img = new Image();
-    this.imgSrc = [
-      "images/love/headshot.png",
-      "images/love/heart-organ.png",
-      "images/love/paw-heart.png"
-    ];
-    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
-    this.scoreType = "love";
-    // add speed Y to change the speed later
-    this.speedY = 3;
-  }
-}
-
-// subclass for the leisure object
-class objectEntertainment extends object {
-  constructor(posX) {
-    super(posX);
-    this.color = "yellow";
-    this.img = new Image();
-    this.imgSrc = [
-      "images/coffee-beans.png",
-      "images/airplane-departure.png",
-      "images/console-controller.png",
-      "images/medieval-pavilion.png",
-      "images/musical-score.png",
-      "images/popcorn.png",
-      "images/tv.png",
-      "images/wine-glass.png"
-    ];
-    this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
-    this.scoreType = "entertainment";
-    // add speed Y to change the speed later
-    this.speedY = 3;
-  }
-}
-
-class obstacles extends object {
-  constructor(posY) {
-    super();
-    this.y=posY
-    this.x=0
-    //this.color="black"
-    this.width = 150;
-    this.height = 150;
-    this.speedX = 2;
-    this.img = new Image();
-    this.imgSrc=["/images/animation/Run (1).png","/images/animation/Run (2).png","/images/animation/Run (3).png",
-    "/images/animation/Run (4).png","/images/animation/Run (5).png","/images/animation/Run (6).png",
-    "/images/animation/Run (7).png","/images/animation/Run (8).png"]
-    
-    // this.img.src = "images/bully-minion.png";
-    this.scoreType = "obstacles";
-    // this.speedY = 2;
-  }
-  update(){
-    // Override update form parent to make enemies move horizontal
-    //this.img.src=this.imgSrc[0]
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    this.x += this.speedX;
-  }
-}
+//Animation frames
+let animationFrame = 0;
 
 // declare the counter
 let counter = 0;
+
 // declare an objects array for all objects
 let objectsArr = [];
+
 // declare an object for the score of each category
 let scores = {
   money: 0,
@@ -249,10 +57,19 @@ function removeObject(objectsArr) {
       let index = objectsArr.indexOf(objectsArr[i]);
       objectsArr.splice(index, 1);
     }
+    // remove the obstacles
+    if (
+      objectsArr[i] != undefined &&
+      objectsArr[i].scoreType == "obstacles" &&
+      objectsArr[i].x >= 1700
+    ) {
+      let index1 = objectsArr.indexOf(objectsArr[i]);
+      objectsArr.splice(index1, 1);
+    }
   }
 }
 
-// function to check if the new generated object collied with any of the objects arry items to avoid
+// function to check if the new generated object collied with any of the items in the objects arry  to avoid
 // objects overlapping
 function crashesWithAnything(obj) {
   for (i = 0; i < objectsArr.length; i++) {
@@ -263,7 +80,6 @@ function crashesWithAnything(obj) {
   return false;
 }
 
-let winGame = true;
 
 // draw function for the page after winning or losing the game
 let draw2 = () => {
@@ -285,23 +101,20 @@ let draw2 = () => {
   }
 
   window.requestAnimationFrame(draw2);
-}
-//Animation frames
-let animationFrame=0
+};
+
 // function to draw the game on canvas
 let draw = () => {
   if (!runningGame) {
     draw2();
     return;
   }
-
   // clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // increase the counter
   counter++;
-  
 
-  //   drawing background image
+  //   draw background image
   let bgImg = new Image();
   bgImg.src = "images/city04-01.png";
   ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
@@ -326,18 +139,16 @@ let draw = () => {
         runningGame = false;
       }
     }
-    
+
     // draw the object in the array
-    if (e.scoreType == "obstacles"){
+    if (e.scoreType == "obstacles") {
       //Animation frame counter
-      animationFrame=++animationFrame%e.imgSrc.length
-      e.img.src=e.imgSrc[animationFrame]
-      e.update();  
-    }
-    else{
+      animationFrame = ++animationFrame % e.imgSrc.length;
+      e.img.src = e.imgSrc[animationFrame];
+      e.update();
+    } else {
       e.update();
     }
-    
   });
   // delete the object from the array to clear from the screen
   if (ind !== undefined) {
@@ -349,7 +160,7 @@ let draw = () => {
     // random X position
     // Creat a random object with random position
     // while (1) {
-    let randomPoX = Math.floor(Math.random() * (canvas.width - 150));
+    let randomPoX = Math.floor(Math.random() * (canvas.width - 250) + 200);
     // let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
     // if (!IsObjectThere(objectsArr, randomPoX)) {
     //to create more obstacles just multiply by more than 4
@@ -400,11 +211,11 @@ let draw = () => {
 
   // to remove the objects from the array after going outside the canvas
   removeObject(objectsArr);
-  if(counter%700===0){
-    let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
-    let newObstacle= new obstacles(randomPoY)
-    objectsArr.push(newObstacle)
-    console.log(newObstacle);
+  if (counter % 700 === 0) {
+    let randomPoY = Math.floor(Math.random() * (canvas.height - 150) + 50);
+    let newObstacle = new obstacles(randomPoY);
+    objectsArr.push(newObstacle);
+    // console.log(newObstacle);
   }
   //Draw the Items when picked in the pie chart
   drawMiddleAndAxis();
@@ -453,7 +264,7 @@ let draw = () => {
 
 // Function for moving player right, left, up, down
 
-document.onkeydown = function(e) {
+document.onkeydown = function (e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
@@ -467,6 +278,9 @@ document.onkeydown = function(e) {
     case 40:
       player.downPressed();
       break;
+    case 13:
+      startGame();
+      break
   }
 };
 

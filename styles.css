@@ -1,13 +1,6 @@
-#game-board {
-    height: 150vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    align-content: center;
-
+#canvas {
+    /* width: 100%; */
 }
-
-#canvas {}
 
 header {
     display: flex;
@@ -21,4 +14,14 @@ header {
 body {
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("images/l1_background.png");
+    background-repeat: no-repeat;
+
+
+
+
 }
