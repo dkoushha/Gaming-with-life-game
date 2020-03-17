@@ -224,7 +224,6 @@ class obstacles extends object {
   }
   update(){
     // Override update form parent to make enemies move horizontal
-    //this.img.src=this.imgSrc[0]
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     this.x += this.speedX;
   }
@@ -330,11 +329,13 @@ let draw = () => {
     // draw the object in the array
     if (e.scoreType == "obstacles"){
       //Animation frame counter
-      animationFrame=++animationFrame%e.imgSrc.length
+      animationFrame=++animationFrame%e.imgSrc.length //1%8=1 2%8=2 3%8=3... 8%8=1
       e.img.src=e.imgSrc[animationFrame]
-      e.update();  
+      //Specifying to take the method from class obstacle
+        e.update();
     }
     else{
+      //Parent update()
       e.update();
     }
     
