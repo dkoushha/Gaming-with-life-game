@@ -42,7 +42,7 @@ class text {
             // to write the command to start the game after writing the story
             if (j >= this.string.length + 30) {
                 f = j - this.string.length - 30
-                ctx.fillText(this.string2.charAt(f), this.x1, 500);
+                ctx.fillText(this.string2.charAt(f), this.x1, 600);
             }
             j++;
             i++;
