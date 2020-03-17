@@ -1,4 +1,11 @@
+let canvas = document.getElementById("canvas");
+let ctx = document.getElementById("canvas").getContext("2d");
+
 window.onload = () => {
+  beginning()
+}
+
+function beginning() {
   ctx.drawImage(this.imgBg, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(this.imgStars, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(this.imgBuilding, 0, 0, canvas.width, canvas.height);
@@ -25,8 +32,7 @@ imgClouds.src = "images/l4_clouds.png";
 //   startGame();
 // };
 // Getting the canvas from html page
-let canvas = document.getElementById("canvas");
-let ctx = document.getElementById("canvas").getContext("2d");
+
 
 // For ending the game
 let runningGame = true;
@@ -99,6 +105,9 @@ let draw2 = () => {
     winImg.src = "images/gameover.jpg";
     ctx.drawImage(winImg, 550, 200, 400, 400);
   }
+  // if (key() === 13) {
+  //   beginning()
+  // }
 
   window.requestAnimationFrame(draw2);
 };
@@ -212,7 +221,7 @@ let draw = () => {
   // to remove the objects from the array after going outside the canvas
   removeObject(objectsArr);
   if (counter % 700 === 0) {
-    let randomPoY = Math.floor(Math.random() * (canvas.height - 150) + 50);
+    let randomPoY = Math.floor(Math.random() * (canvas.height - 250));
     let newObstacle = new obstacles(randomPoY);
     objectsArr.push(newObstacle);
     // console.log(newObstacle);
@@ -264,7 +273,11 @@ let draw = () => {
 
 // Function for moving player right, left, up, down
 
-document.onkeydown = function (e) {
+document.onkeydown = (e) => {
+  key(e)
+}
+
+function key(e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
