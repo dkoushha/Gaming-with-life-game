@@ -139,8 +139,6 @@ class objectHealth extends object {
             "images/health/canned-fish.png",
             "images/health/cycling.png",
             "images/health/hot-meal.png",
-            "images/health/jumping-rope.png",
-            "images/health/skier.png"
         ];
         this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
         this.scoreType = "health";
@@ -174,14 +172,14 @@ class objectEntertainment extends object {
         this.color = "yellow";
         this.img = new Image();
         this.imgSrc = [
-            "images/coffee-beans.png",
-            "images/airplane-departure.png",
-            "images/console-controller.png",
-            "images/medieval-pavilion.png",
-            "images/musical-score.png",
-            "images/popcorn.png",
-            "images/tv.png",
-            "images/wine-glass.png"
+            "images/entertainment/coffee-beans.png",
+            "images/entertainment/airplane-departure.png",
+            "images/entertainment/console-controller.png",
+            "images/entertainment/medieval-pavilion.png",
+            "images/entertainment/musical-score.png",
+            "images/entertainment/popcorn.png",
+            "images/entertainment/tv.png",
+            "images/entertainment/wine-glass.png"
         ];
         this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
         this.scoreType = "entertainment";

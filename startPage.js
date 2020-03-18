@@ -12,7 +12,6 @@ class text {
         this.lineHeight = lineHeight;
         this.lineStartX = x;
         this.img = new Image();
-        this.img.src = "images/pikeman.png";
         this.string2 = "Press Enter to  start the game"
     }
     // method to write it on the canvas letter by latter

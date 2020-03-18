@@ -315,8 +315,6 @@ let draw = () => {
 
 document.onkeydown = key
 
-
-
 let leftDir = false
 let rightDir = false
 let UpDownDir = false
@@ -327,7 +325,6 @@ function key(e) {
     case 37:
       player.leftPressed();
       leftDir = true;
-      //console.log(bool)
       break;
     case 39:
       player.rightPressed();
