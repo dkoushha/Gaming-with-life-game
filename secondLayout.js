@@ -112,12 +112,24 @@ let draw2 = () => {
   window.requestAnimationFrame(draw2);
 };
 
+//Game sound effects
+let gameSound=document.getElementById("game-sound")
+let gameOverSound=document.getElementById("game-over")
+let winGameSound=document.getElementById("win")
+let moneySound=document.getElementById("money-sound")
+let healthSound=document.getElementById("health-sound")
+let entertainmentSound=document.getElementById("entertainment-sound")
+let loveSound=document.getElementById("love-sound")
+
 // function to draw the game on canvas
 let draw = () => {
   if (!runningGame) {
     draw2();
+    gameSound.pause()
+    
     return;
   }
+  gameSound.play()
   // clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // increase the counter
@@ -143,9 +155,23 @@ let draw = () => {
       }
       // get the index of the object in the array
       ind = i;
+      if(e.scoreType=="money"){
+        moneySound.play()
+      }
+      if(e.scoreType=="health"){
+        healthSound.play()
+      }
+      if(e.scoreType=="entertainment"){
+        entertainmentSound.play()
+      }
+      if(e.scoreType=="love"){
+        loveSound.play()
+      }
+
       if (e.scoreType == "obstacles") {
         console.log("loser");
         runningGame = false;
+        gameOverSound.play()
       }
     }
 
@@ -154,7 +180,14 @@ let draw = () => {
       //Animation frame counter
       animationFrame = ++animationFrame % e.imgSrc.length;
       e.img.src = e.imgSrc[animationFrame];
-      e.update();
+      e.update()
+      
+      
+      //window.requestAnimationFrame(e.update)
+      // setInterval(()=>{
+      //   e.update();
+
+      //  },1000)
     } else {
       e.update();
     }
@@ -252,6 +285,7 @@ let draw = () => {
     //Draw winning image
     winGame = false;
     runningGame = false;
+    winGameSound.play()
   }
   //Every 40 seconds the score will go down by one on every section
   if (counter % 2400 === 0) {
@@ -297,7 +331,10 @@ function key(e) {
   }
 };
 
+
+//let soundFlag=true
 // start game function
 function startGame() {
   draw();
+
 }

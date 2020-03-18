@@ -37,7 +37,7 @@ let player = {
     },
     // declare the player borders
     left: function () {
-        return this.x + 50;
+        return this.x + 100;
     },
     top: function () {
         return this.y + 50;
@@ -199,7 +199,9 @@ class obstacles extends object {
     update() {
         // Override update form parent to make enemies move horizontal
         //this.img.src=this.imgSrc[0]
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+       
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        
         this.x += this.speedX;
     }
 }
