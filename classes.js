@@ -1,8 +1,8 @@
 let player = {
-    x: canvas.width / 2 - 200,
+    x: (canvas.width / 2)-100,
     y: 500,
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
     img: new Image(),
     // to move the player to the right
     rightPressed: function () {
@@ -24,7 +24,7 @@ let player = {
         }
     },
     downPressed: function () {
-        if (this.y <= canvas.height - this.height - 10) {
+        if (this.y <= canvas.height - this.height - 20) {
             this.y += 30;
         }
     },
@@ -32,21 +32,38 @@ let player = {
     update: function () {
         // ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "red";
-        this.img.src = "images/player/face .png";
+        //this.img.src = "images/player/face .png";
+        this.imgSrc=["/images/player/face.png","/images/player/profileboy.png","/images/player/profilegirl.png"]
+        if(gameStart){
+            this.img.src=this.imgSrc[0]
+            gameStart=false
+        }
+        if(UpDownDir){
+            this.img.src=this.imgSrc[0]
+            UpDownDir=false
+        }
+        if(leftDir){
+            this.img.src=this.imgSrc[2]
+            leftDir=false
+        }
+        if(rightDir){
+            this.img.src=this.imgSrc[1]
+            rightDir=false
+        }
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     },
     // declare the player borders
     left: function () {
-        return this.x + 100;
+        return this.x + 80;
     },
     top: function () {
-        return this.y + 50;
+        return this.y + 30;
     },
     right: function () {
-        return this.x + this.width - 50;
+        return this.x + this.width - 30;
     },
     bottom: function () {
-        return this.y + this.height - 50;
+        return this.y + this.height - 30;
     },
     // to check if the player collide with the objects
     crash: function (object) {
@@ -63,8 +80,8 @@ class object {
     constructor(posX) {
         this.x = posX;
         this.y = 0;
-        this.width = 60;
-        this.height = 60;
+        this.width = 50;
+        this.height = 50;
     }
     // draw the object on canvas
     update() {
@@ -170,7 +187,7 @@ class objectEntertainment extends object {
         this.speedY = 3;
     }
 }
-
+//subclass for objects
 class obstacles extends object {
     constructor(posY) {
         super();
@@ -191,17 +208,11 @@ class obstacles extends object {
             "/images/animation/Run (7).png",
             "/images/animation/Run (8).png"
         ];
-
-        // this.img.src = "images/bully-minion.png";
         this.scoreType = "obstacles";
-        // this.speedY = 2;
     }
-    update() {
-        // Override update form parent to make enemies move horizontal
-        //this.img.src=this.imgSrc[0]
-       
-            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        
+    // Override update form parent to make enemies move horizontal
+    update() {   
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         this.x += this.speedX;
     }
 }

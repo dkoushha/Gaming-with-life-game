@@ -36,13 +36,13 @@ class text {
             // To start writing the text letter by letter after  30
             if (j >= 30) {
                 ctx.fillStyle = "#B1B3B3FF"
-                ctx.font = "30px Arial";
+                ctx.font = "20px Arial";
                 ctx.fillText(this.string.charAt(i), this.x, this.y);
             }
             // to write the command to start the game after writing the story
             if (j >= this.string.length + 30) {
                 f = j - this.string.length - 30
-                ctx.fillText(this.string2.charAt(f), this.x1, 600);
+                ctx.fillText(this.string2.charAt(f), this.x1, 500);
             }
             j++;
             i++;
