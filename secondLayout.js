@@ -103,17 +103,14 @@ let draw2 = () => {
     winImg.src = "images/gameover.jpg";
     ctx.drawImage(winImg, 400, 150, 400, 400);
   }
-  document.onkeydown = (e) => {
+  document.onkeydown = e => {
     if (e.keyCode === 32) {
       location.reload();
     }
-  }
-
+  };
 
   window.requestAnimationFrame(draw2);
 };
-
-
 
 //Game sound effects
 let gameSound = document.getElementById("game-sound");
@@ -144,9 +141,7 @@ let draw = () => {
 
   // draw the player
 
-  player.update()
-
-
+  player.update();
 
   // Loop inside the array of objects and clear the object from the screen if the player crash wit it
   // and add the score for the object category.
@@ -313,14 +308,12 @@ let draw = () => {
 
 // Function for moving player right, left, up, down
 
-document.onkeydown = key
+document.onkeydown = key;
 
-
-
-let leftDir = false
-let rightDir = false
-let UpDownDir = false
-let gameStart = false
+let leftDir = false;
+let rightDir = false;
+let UpDownDir = false;
+let gameStart = false;
 
 function key(e) {
   switch (e.keyCode) {
@@ -343,11 +336,10 @@ function key(e) {
       break;
     case 13:
       startGame();
-      gameStart = true
+      gameStart = true;
       break;
   }
 }
-
 
 function startGame() {
   draw();
