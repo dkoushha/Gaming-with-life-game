@@ -2,9 +2,8 @@ let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
 
 window.onload = () => {
-
-  beginning()
-}
+  beginning();
+};
 
 function beginning() {
   ctx.drawImage(this.imgBg, 0, 0, ctx.canvas.width, canvas.height);
@@ -13,9 +12,9 @@ function beginning() {
   ctx.drawImage(this.imgLamps, 0, 0, ctx.canvas.width, canvas.height);
   // let title = new text(gameName, 550 - (gameName.length / 2), 100, 50);
   // title.updateTitle();
-  let newText = new text(gameStory, 100, 250, 40);
+  let newText = new text(gameStory, 100, 150, 30);
   newText.update(100);
-};
+}
 imgBuilding = new Image();
 imgBuilding.src = "images/l4_buildings01.png";
 imgLamps = new Image();
@@ -33,7 +32,6 @@ imgClouds.src = "images/l4_clouds.png";
 //   startGame();
 // };
 // Getting the canvas from html page
-
 
 // For ending the game
 let runningGame = true;
@@ -87,7 +85,6 @@ function crashesWithAnything(obj) {
   return false;
 }
 
-
 // draw function for the page after winning or losing the game
 let draw2 = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -99,12 +96,12 @@ let draw2 = () => {
   if (!runningGame && !winGame) {
     let winImg = new Image();
     winImg.src = "images/youwin.png";
-    ctx.drawImage(winImg, 550, 200, 400, 400);
+    ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
     let winImg = new Image();
     winImg.src = "images/gameover.jpg";
-    ctx.drawImage(winImg, 550, 200, 400, 400);
+    ctx.drawImage(winImg, 400, 150, 400, 400);
   }
   document.onkeydown = (e) => {
     if (e.keyCode === 32) {
@@ -116,12 +113,25 @@ let draw2 = () => {
   window.requestAnimationFrame(draw2);
 };
 
+
+
+//Game sound effects
+let gameSound = document.getElementById("game-sound");
+let gameOverSound = document.getElementById("game-over");
+let winGameSound = document.getElementById("win");
+let moneySound = document.getElementById("money-sound");
+let healthSound = document.getElementById("health-sound");
+let entertainmentSound = document.getElementById("entertainment-sound");
+let loveSound = document.getElementById("love-sound");
+
 // function to draw the game on canvas
 let draw = () => {
   if (!runningGame) {
     draw2();
+    gameSound.pause();
     return;
   }
+  gameSound.play();
   // clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // increase the counter
@@ -133,7 +143,9 @@ let draw = () => {
   ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 
   // draw the player
+
   player.update()
+
 
 
   // Loop inside the array of objects and clear the object from the screen if the player crash wit it
@@ -148,9 +160,23 @@ let draw = () => {
       }
       // get the index of the object in the array
       ind = i;
+      if (e.scoreType == "money") {
+        moneySound.play();
+      }
+      if (e.scoreType == "health") {
+        healthSound.play();
+      }
+      if (e.scoreType == "entertainment") {
+        entertainmentSound.play();
+      }
+      if (e.scoreType == "love") {
+        loveSound.play();
+      }
+
       if (e.scoreType == "obstacles") {
         console.log("loser");
         runningGame = false;
+        gameOverSound.play();
       }
     }
 
@@ -160,6 +186,12 @@ let draw = () => {
       animationFrame = ++animationFrame % e.imgSrc.length;
       e.img.src = e.imgSrc[animationFrame];
       e.update();
+
+      //window.requestAnimationFrame(e.update)
+      // setInterval(()=>{
+      //   e.update();
+
+      //  },1000)
     } else {
       e.update();
     }
@@ -217,10 +249,12 @@ let draw = () => {
 
   if (counter % 500 === 0) {
     // for loop to great more than one object
-    let randomPoX = Math.floor(Math.random() * (canvas.width - 150));
-    let newObject = new obstacles(randomPoX);
+    let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
+    let newObject = new obstacles(randomPoY);
     // if it doesn't collied with any other object to add it to the array
-    objectsArr.push(newObject);
+    if (!crashesWithAnything(newObject)) {
+      objectsArr.push(newObject);
+    }
   }
 
   // to remove the objects from the array after going outside the canvas
@@ -257,9 +291,10 @@ let draw = () => {
     //Draw winning image
     winGame = false;
     runningGame = false;
+    winGameSound.play();
   }
-  //Every 40 seconds the score will go down by one on every section
-  if (counter % 2400 === 0) {
+  //Every 30 seconds the score will go down by one on every section
+  if (counter % 1800 === 0) {
     if (scores.money != 0) {
       scores.money -= 1;
     }
@@ -282,32 +317,38 @@ document.onkeydown = key
 
 
 
+let leftDir = false
+let rightDir = false
+let UpDownDir = false
+let gameStart = false
+
 function key(e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
-
+      leftDir = true;
+      //console.log(bool)
       break;
     case 39:
       player.rightPressed();
+      rightDir = true;
       break;
     case 38:
       player.upPressed();
+      UpDownDir = true;
       break;
     case 40:
       player.downPressed();
+      UpDownDir = true;
       break;
     case 13:
       startGame();
-      break
-    case 32:
-      beginning()
+      gameStart = true
       break;
   }
-  return e.keyCode
-};
+}
 
-// start game function
+
 function startGame() {
   draw();
 }
