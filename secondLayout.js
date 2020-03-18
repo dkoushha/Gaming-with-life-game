@@ -2,14 +2,15 @@ let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
 
 window.onload = () => {
+
   beginning()
 }
 
 function beginning() {
-  ctx.drawImage(this.imgBg, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(this.imgStars, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(this.imgBuilding, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(this.imgLamps, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(this.imgBg, 0, 0, ctx.canvas.width, canvas.height);
+  ctx.drawImage(this.imgStars, 0, 0, ctx.canvas.width, canvas.height);
+  ctx.drawImage(this.imgBuilding, 0, 0, ctx.canvas.width, canvas.height);
+  ctx.drawImage(this.imgLamps, 0, 0, ctx.canvas.width, canvas.height);
   // let title = new text(gameName, 550 - (gameName.length / 2), 100, 50);
   // title.updateTitle();
   let newText = new text(gameStory, 100, 250, 40);
@@ -105,9 +106,12 @@ let draw2 = () => {
     winImg.src = "images/gameover.jpg";
     ctx.drawImage(winImg, 550, 200, 400, 400);
   }
-  // if (key() === 13) {
-  //   beginning()
-  // }
+  document.onkeydown = (e) => {
+    if (e.keyCode === 32) {
+      location.reload();
+    }
+  }
+
 
   window.requestAnimationFrame(draw2);
 };
@@ -129,7 +133,8 @@ let draw = () => {
   ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 
   // draw the player
-  player.update();
+  player.update()
+
 
   // Loop inside the array of objects and clear the object from the screen if the player crash wit it
   // and add the score for the object category.
@@ -273,14 +278,15 @@ let draw = () => {
 
 // Function for moving player right, left, up, down
 
-document.onkeydown = (e) => {
-  key(e)
-}
+document.onkeydown = key
+
+
 
 function key(e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
+
       break;
     case 39:
       player.rightPressed();
@@ -294,7 +300,11 @@ function key(e) {
     case 13:
       startGame();
       break
+    case 32:
+      beginning()
+      break;
   }
+  return e.keyCode
 };
 
 // start game function

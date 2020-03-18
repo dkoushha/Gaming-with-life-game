@@ -9,6 +9,7 @@ let player = {
         // to keep it inside the canvas
         if (this.x < canvas.width - this.width) {
             this.x += 30;
+
         }
     },
     // to move the player to the left
@@ -16,6 +17,7 @@ let player = {
         // to keep it inside the canvas
         if (this.x >= 0) {
             this.x -= 30;
+
         }
     },
     upPressed: function () {
@@ -30,11 +32,13 @@ let player = {
     },
     // to draw the player on the canvas
     update: function () {
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = "red";
-        this.img.src = "images/player/face .png";
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    },
+            // ctx.fillRect(this.x, this.y, this.width, this.height);
+
+            this.img.src = "images/player/face.png";
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
+
+        ,
     // declare the player borders
     left: function () {
         return this.x + 50;
