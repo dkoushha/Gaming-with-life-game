@@ -56,15 +56,15 @@ let drawEndGame = () => {
   if (!runningGame && !winGame) {
     drawEndGameBg();
     let winImg = new Image();
-    winImg.src = "images/youwin.png";
-    ctx.drawImage(winImg, 400, 150, 400, 400);
+    //winImg.src = "images/youwin.png";
+    // ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
     bodyCtx.style.backgroundImage = "url('images/stars.png'),url('images/endGameBg/background.png')";
     drawEndGameBg();
     let winImg = new Image();
-    winImg.src = "images/gameover.jpg";
-    ctx.drawImage(winImg, 400, 150, 400, 400);
+    //winImg.src = "images/gameover.jpg";
+    // ctx.drawImage(winImg, 400, 150, 400, 400);
   }
   // press space to play the game again
 
