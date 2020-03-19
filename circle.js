@@ -123,7 +123,7 @@ let drawItemHealth = score => {
 let drawItemLeisure = score => {
   let startAngleLeisure = Math.PI / 2;
   let endAngleLeisure = 0;
-  let colorLeisure = "#8c138e";
+  let colorLeisure = "#fff200";
 
   let radius = 20;
   for (let i = 0; i < score; i++) {

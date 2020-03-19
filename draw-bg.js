@@ -10,12 +10,17 @@ imgSun = new Image();
 imgSun.src = "images/l2_sun.png";
 imgClouds = new Image();
 imgClouds.src = "images/l4_clouds.png";
+btnImgStartGame = new Image()
+btnImgStartGame.src = "images/Start-game.png"
+
 
 function drawFirstBg() {
     ctx.drawImage(this.imgBg, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgStars, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgBuilding, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgLamps, 0, 0, ctx.canvas.width, canvas.height);
+    ctx.drawImage(this.btnImgStartGame, 500, 400, 200, 50);
+
 }
 
 imgBuildingBoardGame = new Image();
@@ -30,12 +35,15 @@ imgCloudsBoardGame = new Image();
 imgCloudsBoardGame.src = "images/gameCityBg/clouds.png";
 imgGroundBoardGame = new Image();
 imgGroundBoardGame.src = "images/gameCityBg/ground.png";
+imgBuildings2BoardGame = new Image();
+imgBuildings2BoardGame.src = "images/gameCityBg/l6_buildings02.png";
 
 function drawGameBoardBg() {
     ctx.drawImage(this.imgBgBoardGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgSunBoardGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgCloudsBoardGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgBuildingBoardGame, 0, 0, ctx.canvas.width, canvas.height);
+    ctx.drawImage(this.imgBuildings2BoardGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgLampsBoardGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgGroundBoardGame, 0, 0, ctx.canvas.width, canvas.height);
 }
@@ -52,13 +60,17 @@ imgStarsEndGame = new Image();
 imgStarsEndGame.src = "images/endGameBg/stars.png";
 imgGroundEndGame = new Image();
 imgGroundEndGame.src = "images/endGameBg/ground.png";
+btnImgPlayAgain = new Image()
+btnImgPlayAgain.src = "images/Play-again.png"
 
 function drawEndGameBg() {
     ctx.drawImage(this.imgBgEndGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgMoonEndGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgStarsEndGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgBuildingEndGame, 0, 0, ctx.canvas.width, canvas.height);
-    ctx.drawImage(this.imgLampsEndgame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgGroundEndGame, 0, 0, ctx.canvas.width, canvas.height);
+    ctx.drawImage(this.imgLampsEndgame, 0, 0, ctx.canvas.width, canvas.height);
+    ctx.drawImage(this.btnImgPlayAgain, 500, 430, 200, 50);
+
 
 }

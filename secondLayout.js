@@ -1,6 +1,7 @@
 // Getting the canvas from html page
 let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
+// let bodyCtx = document.getElementsByTagName("body")
 
 window.onload = () => {
   firstPage();
@@ -54,16 +55,14 @@ let drawEndGame = () => {
   // draw img if the player won
   if (!runningGame && !winGame) {
     drawEndGameBg();
-    let winImg = new Image();
-    winImg.src = "images/youwin.png";
-    ctx.drawImage(winImg, 400, 150, 400, 400);
+    // let winImg = new Image();
+    // winImg.src = "images/youwin.png";
+    // ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
-    // body.style.background = "url('images / l4_buildings01.png' ), url('images / l2_stars.png '),url('images/endGameBg/background.png')";
+    // bodyCtx.style.background-image = "url('images /l4_buildings01.png' ), url('images /l2_stars.png '),url('images/endGameBg/background.png')";
     drawEndGameBg();
-    let winImg = new Image();
-    winImg.src = "images/gameover.jpg";
-    ctx.drawImage(winImg, 400, 150, 400, 400);
+
   }
   // press space to play the game again
   document.onkeydown = (e) => {
@@ -126,7 +125,6 @@ let drawGameBoard = () => {
       // add the score
       if (scores[e.scoreType] <= 9) {
         scores[e.scoreType] += 1;
-        console.log(scores[e.scoreType])
       }
       // get the index of the object in the array after the play with it
       ind = i;
@@ -146,7 +144,6 @@ let drawGameBoard = () => {
       }
 
       if (e.scoreType == "obstacles") {
-        console.log("loser");
         runningGame = false;
         gameOverSound.play();
       }
@@ -155,12 +152,12 @@ let drawGameBoard = () => {
     // draw the object in the array
     if (e.scoreType == "obstacles") {
       //Animation frame counter
-      if(counter%8===0){
+      if (counter % 8 === 0) {
         //To have the acces every %8 frame and update the index in the class obstacle
-        e.currentImageIdx=(e.currentImageIdx+1)%e.images.length
+        e.currentImageIdx = (e.currentImageIdx + 1) % e.images.length
       }
       e.update();
-      
+
     } else {
       e.update();
     }
@@ -277,6 +274,8 @@ let drawGameBoard = () => {
 
 document.onkeydown = key
 
+
+// boolean to change the player img according to the direction
 let leftDir = false
 let rightDir = false
 let UpDownDir = false

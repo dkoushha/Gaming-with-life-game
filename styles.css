@@ -7,7 +7,7 @@ header {
   justify-content: flex-start;
   align-items: flex-start;
   align-content: flex-start;
-  height: 50px;
+  height: 90px;
   margin: 0;
   padding: 0;
 
@@ -25,8 +25,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-image: url("images/l4_buildings01.png"), url("images/l2_stars.png"),
-    url("images/l1_background.png");
+  background-image: url("images/l2_stars.png"), url("images/l1_background.png");
 
   background-repeat: no-repeat, no-repeat;
   background-size: cover, cover;
