@@ -195,7 +195,7 @@ class obstacles extends object {
         this.x = 0;
         this.width = 150;
         this.height = 150;
-        this.speedX = 2;
+        this.speedX = 4;
         //this index will be changes from 0 to 7 with a certain frame
         this.currentImageIdx = 0
         this.imgSrc = [

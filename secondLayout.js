@@ -122,7 +122,6 @@ let drawGameBoard = () => {
       // add the score
       if (scores[e.scoreType] <= 9) {
         scores[e.scoreType] += 1;
-        console.log(scores[e.scoreType])
       }
       // get the index of the object in the array after the play with it
       ind = i;
@@ -229,13 +228,13 @@ let drawGameBoard = () => {
     drawItemMoney(scores.money);
   }
   if (scores.love <= 10) {
-    drawItemLove(scores.love);
+    drawItemLove(scores.love); 
   }
   if (scores.health <= 10) {
     drawItemHealth(scores.health);
   }
   if (scores.entertainment <= 10) {
-    drawItemLeisure(scores.entertainment);
+    drawItemEntertainment(scores.entertainment);
   }
 
   // to win the game
