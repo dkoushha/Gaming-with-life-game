@@ -139,8 +139,6 @@ class objectHealth extends object {
             "images/health/canned-fish.png",
             "images/health/cycling.png",
             "images/health/hot-meal.png",
-            "images/health/jumping-rope.png",
-            "images/health/skier.png"
         ];
         this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
         this.scoreType = "health";
@@ -174,14 +172,14 @@ class objectEntertainment extends object {
         this.color = "yellow";
         this.img = new Image();
         this.imgSrc = [
-            "images/coffee-beans.png",
-            "images/airplane-departure.png",
-            "images/console-controller.png",
-            "images/medieval-pavilion.png",
-            "images/musical-score.png",
-            "images/popcorn.png",
-            "images/tv.png",
-            "images/wine-glass.png"
+            "images/entertainment/coffee-beans.png",
+            "images/entertainment/airplane-departure.png",
+            "images/entertainment/console-controller.png",
+            "images/entertainment/medieval-pavilion.png",
+            "images/entertainment/musical-score.png",
+            "images/entertainment/popcorn.png",
+            "images/entertainment/tv.png",
+            "images/entertainment/wine-glass.png"
         ];
         this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
         this.scoreType = "entertainment";
@@ -195,11 +193,11 @@ class obstacles extends object {
         super();
         this.y = posY;
         this.x = 0;
-        //this.color="black"
         this.width = 150;
         this.height = 150;
         this.speedX = 2;
-        this.img = new Image();
+        //this index will be changes from 0 to 7 with a certain frame
+        this.currentImageIdx = 0
         this.imgSrc = [
             "/images/animation/Run (1).png",
             "/images/animation/Run (2).png",
@@ -210,11 +208,23 @@ class obstacles extends object {
             "/images/animation/Run (7).png",
             "/images/animation/Run (8).png"
         ];
+        //In this empty array the new Image is created with its source
+        this.images = []
+        this.imgSrc.forEach((src) => {
+            let i = new Image()
+            i.src = src
+            this.images.push(i)
+        })
         this.scoreType = "obstacles";
     }
     // Override update form parent to make enemies move horizontal
     update() {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        this.x += this.speedX;
+        //The image will be drawn depending on the frames on secondLayout with its current index
+        ctx.drawImage(this.images[this.currentImageIdx], this.x, this.y, this.width, this.height);
+        this.x += this.speedX;   
     }
+    
+
+        
+    
 }

@@ -35,13 +35,11 @@ imgClouds.src = "images/l4_clouds.png";
 
 // For ending the game
 let runningGame = true;
+
 // for winning the game
 let winGame = true;
 
-//Animation frames
-let animationFrame = 0;
-
-// declare the counter
+// declare the counter or frames
 let counter = 0;
 
 // declare an objects array for all objects
@@ -152,6 +150,7 @@ let draw = () => {
       // add the score
       if (scores[e.scoreType] <= 9) {
         scores[e.scoreType] += 1;
+        console.log(scores[e.scoreType])
       }
       // get the index of the object in the array
       ind = i;
@@ -178,15 +177,12 @@ let draw = () => {
     // draw the object in the array
     if (e.scoreType == "obstacles") {
       //Animation frame counter
-      animationFrame = ++animationFrame % e.imgSrc.length;
-      e.img.src = e.imgSrc[animationFrame];
+      if(counter%8===0){
+        //To have the acces every %8 frame and update the index in the class obstacle
+        e.currentImageIdx=(e.currentImageIdx+1)%e.images.length
+      }
       e.update();
-
-      //window.requestAnimationFrame(e.update)
-      // setInterval(()=>{
-      //   e.update();
-
-      //  },1000)
+      
     } else {
       e.update();
     }
@@ -277,10 +273,10 @@ let draw = () => {
 
   // to win the game
   if (
-    scores.money >= 10 &&
-    scores.love >= 10 &&
-    scores.health >= 10 &&
-    scores.entertainment >= 10
+    scores.money === 10 &&
+    scores.love === 10 &&
+    scores.health === 10 &&
+    scores.entertainment === 10
   ) {
     console.log("winner");
     //Draw winning image
@@ -308,19 +304,18 @@ let draw = () => {
 
 // Function for moving player right, left, up, down
 
-document.onkeydown = key;
+document.onkeydown = key
 
-let leftDir = false;
-let rightDir = false;
-let UpDownDir = false;
-let gameStart = false;
+let leftDir = false
+let rightDir = false
+let UpDownDir = false
+let gameStart = false
 
 function key(e) {
   switch (e.keyCode) {
     case 37:
       player.leftPressed();
       leftDir = true;
-      //console.log(bool)
       break;
     case 39:
       player.rightPressed();

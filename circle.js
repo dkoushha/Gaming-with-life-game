@@ -8,13 +8,19 @@ let drawMiddleAndAxis = () => {
   ctx.fillStyle = "black"; // !
   // fills the inner circle with black color
   ctx.fill();
-  ctx.font = "18px serif";
-  ctx.fillStyle = "black";
-  ctx.fillText("Entertainment ", 230, 255);
-  ctx.fillText("Money ", 230, 55);
-  ctx.fillText("Love ", 20, 55);
-  ctx.fillText("Health ", 20, 255);
   ctx.closePath();
+  let moneyIcon = new Image();
+  let loveIcon = new Image();
+  let healthIcon = new Image();
+  let entertainmentIcon = new Image();
+  moneyIcon.src = "images/icons/cashIcon.png"
+  loveIcon.src = "images/icons/heart-organIcon.png"
+  healthIcon.src = "images/icons/van-damme-splitIcon.png"
+  entertainmentIcon.src = "images/icons/medieval-pavilionIcon.png"
+  ctx.drawImage(moneyIcon, 230, 255, 50, 50);
+  ctx.drawImage(healthIcon, 230, 55, 50, 50);
+  ctx.drawImage(loveIcon, 20, 55, 50, 50);
+  ctx.drawImage(entertainmentIcon, 20, 255, 50, 50);
 
   //Y-Axis
   // ctx.beginPath();
@@ -68,7 +74,7 @@ class Item {
 let drawItemMoney = score => {
   let startAngleMoney = 0;
   let endAngleMoney = (3 * Math.PI) / 2;
-  let colorMoney = "green";
+  let colorMoney = "#1a7a12";
   let radius = 20;
   for (let i = 0; i < score; i++) {
     let item = new Item(radius, startAngleMoney, endAngleMoney, colorMoney);
@@ -84,7 +90,7 @@ let drawItemMoney = score => {
 let drawItemLove = score => {
   let startAngleLove = (3 * Math.PI) / 2;
   let endAngleLove = Math.PI;
-  let colorLove = "red";
+  let colorLove = "#88001b";
   let radius = 20;
   for (let i = 0; i < score; i++) {
     let item = new Item(radius, startAngleLove, endAngleLove, colorLove);
@@ -100,7 +106,7 @@ let drawItemLove = score => {
 let drawItemHealth = score => {
   let startAngleHealth = Math.PI;
   let endAngleHealth = Math.PI / 2;
-  let colorHealth = "blue";
+  let colorHealth = "#0f1ab3";
 
   let radius = 20;
   for (let i = 0; i < score; i++) {
@@ -117,7 +123,7 @@ let drawItemHealth = score => {
 let drawItemLeisure = score => {
   let startAngleLeisure = Math.PI / 2;
   let endAngleLeisure = 0;
-  let colorLeisure = "orange";
+  let colorLeisure = "#8c138e";
 
   let radius = 20;
   for (let i = 0; i < score; i++) {
