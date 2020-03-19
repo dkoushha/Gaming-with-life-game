@@ -26,7 +26,6 @@ body {
   justify-content: flex-start;
   align-items: center;
   background-image: url("images/stars.png"), url("images/l1_background.png");
-
   background-repeat: no-repeat, no-repeat;
   background-size: cover, cover;
 }
