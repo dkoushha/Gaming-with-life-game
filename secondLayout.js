@@ -1,62 +1,26 @@
+// Getting the canvas from html page
 let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
 
 window.onload = () => {
-  beginning();
+  firstPage();
 };
 
-function beginning() {
-  ctx.drawImage(this.imgBg, 0, 0, ctx.canvas.width, canvas.height);
-  ctx.drawImage(this.imgStars, 0, 0, ctx.canvas.width, canvas.height);
-  ctx.drawImage(this.imgBuilding, 0, 0, ctx.canvas.width, canvas.height);
-  ctx.drawImage(this.imgLamps, 0, 0, ctx.canvas.width, canvas.height);
-  // let title = new text(gameName, 550 - (gameName.length / 2), 100, 50);
-  // title.updateTitle();
+function startGame() {
+  drawGameBoard();
+}
+
+// to draw the first page with bg and text on canvas
+function firstPage() {
+  drawFirstBg()
   let newText = new text(gameStory, 100, 150, 30);
   newText.update(100);
 }
-imgBuilding = new Image();
-imgBuilding.src = "images/l4_buildings01.png";
-imgLamps = new Image();
-imgLamps.src = "images/l7_lamps.png";
-imgBg = new Image();
-imgBg.src = "images/l1_background.png";
-imgStars = new Image();
-imgStars.src = "images/l2_stars.png";
-imgSun = new Image();
-imgSun.src = "images/l2_sun.png";
-imgClouds = new Image();
-imgClouds.src = "images/l4_clouds.png";
 
-// document.getElementById("start-button").onclick = () => {
-//   startGame();
-// };
-// Getting the canvas from html page
-
-// For ending the game
-let runningGame = true;
-
-// for winning the game
-let winGame = true;
-
-// declare the counter or frames
-let counter = 0;
-
-// declare an objects array for all objects
-let objectsArr = [];
-
-// declare an object for the score of each category
-let scores = {
-  money: 0,
-  health: 0,
-  entertainment: 0,
-  love: 0
-};
-
-// function to remove objects from the objects array when they reach the end of the canvas
+// function to remove objects from the objects array and from the canvas when they reach the end of the canvas
 function removeObject(objectsArr) {
   for (let i = 0; i < objectsArr.length; i++) {
-    if (objectsArr[i].y >= 750) {
+    if (objectsArr[i].y >= 700) {
       let index = objectsArr.indexOf(objectsArr[i]);
       objectsArr.splice(index, 1);
     }
@@ -64,7 +28,7 @@ function removeObject(objectsArr) {
     if (
       objectsArr[i] != undefined &&
       objectsArr[i].scoreType == "obstacles" &&
-      objectsArr[i].x >= 1700
+      objectsArr[i].x >= 1200
     ) {
       let index1 = objectsArr.indexOf(objectsArr[i]);
       objectsArr.splice(index1, 1);
@@ -84,48 +48,62 @@ function crashesWithAnything(obj) {
 }
 
 // draw function for the page after winning or losing the game
-let draw2 = () => {
+let drawEndGame = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // draw the bg
-  let bgImg = new Image();
-  bgImg.src = "images/city04-01.png";
-  ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
   // draw img if the player won
   if (!runningGame && !winGame) {
+    drawEndGameBg();
     let winImg = new Image();
     winImg.src = "images/youwin.png";
     ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
+    drawEndGameBg();
     let winImg = new Image();
     winImg.src = "images/gameover.jpg";
     ctx.drawImage(winImg, 400, 150, 400, 400);
   }
-  document.onkeydown = e => {
+  // press space to play the game again
+  document.onkeydown = (e) => {
     if (e.keyCode === 32) {
       location.reload();
     }
-  };
-
-  window.requestAnimationFrame(draw2);
+  }
+  window.requestAnimationFrame(drawEndGame);
 };
 
-//Game sound effects
-let gameSound = document.getElementById("game-sound");
-let gameOverSound = document.getElementById("game-over");
-let winGameSound = document.getElementById("win");
-let moneySound = document.getElementById("money-sound");
-let healthSound = document.getElementById("health-sound");
-let entertainmentSound = document.getElementById("entertainment-sound");
-let loveSound = document.getElementById("love-sound");
+// For ending the game
+let runningGame = true;
+
+// for winning the game
+let winGame = true;
+
+//Animation frames
+let animationFrame = 0;
+
+// declare the counter
+let counter = 0;
+
+// declare an objects array for all objects
+let objectsArr = [];
+
+// declare an object for the score of each category
+let scores = {
+  money: 0,
+  health: 0,
+  entertainment: 0,
+  love: 0
+};
 
 // function to draw the game on canvas
-let draw = () => {
+let drawGameBoard = () => {
   if (!runningGame) {
-    draw2();
+    drawEndGame();
     gameSound.pause();
     return;
   }
+  gameSound.volume = 0.1
   gameSound.play();
   // clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -133,17 +111,11 @@ let draw = () => {
   counter++;
 
   //   draw background image
-  let bgImg = new Image();
-  bgImg.src = "images/city04-01.png";
-  ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+  drawGameBoardBg()
 
   // draw the player
-
-  player.update();
-
-  // Loop inside the array of objects and clear the object from the screen if the player crash wit it
+  player.update()
   // and add the score for the object category.
-  // declare the index inside the array for the crash object
   let ind;
   objectsArr.forEach((e, i) => {
     if (player.crash(e)) {
@@ -152,12 +124,14 @@ let draw = () => {
         scores[e.scoreType] += 1;
         console.log(scores[e.scoreType])
       }
-      // get the index of the object in the array
+      // get the index of the object in the array after the play with it
       ind = i;
+      // play the sound depending on the score type
       if (e.scoreType == "money") {
         moneySound.play();
       }
       if (e.scoreType == "health") {
+
         healthSound.play();
       }
       if (e.scoreType == "entertainment") {
@@ -187,7 +161,8 @@ let draw = () => {
       e.update();
     }
   });
-  // delete the object from the array to clear from the screen
+
+  // delete the object from the array to clear from the screen when the player collied with it
   if (ind !== undefined) {
     objectsArr.splice(ind, 1);
   }
@@ -196,10 +171,7 @@ let draw = () => {
   function randomObject() {
     // random X position
     // Creat a random object with random position
-    // while (1) {
     let randomPoX = Math.floor(Math.random() * (canvas.width - 250) + 200);
-    // let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
-    // if (!IsObjectThere(objectsArr, randomPoX)) {
     //to create more obstacles just multiply by more than 4
     switch (Math.floor(Math.random() * 5)) {
       case 1:
@@ -240,7 +212,7 @@ let draw = () => {
 
   if (counter % 500 === 0) {
     // for loop to great more than one object
-    let randomPoY = Math.floor(Math.random() * (canvas.height - 150));
+    let randomPoY = Math.floor(Math.random() * (canvas.height - 250));
     let newObject = new obstacles(randomPoY);
     // if it doesn't collied with any other object to add it to the array
     if (!crashesWithAnything(newObject)) {
@@ -250,12 +222,7 @@ let draw = () => {
 
   // to remove the objects from the array after going outside the canvas
   removeObject(objectsArr);
-  if (counter % 700 === 0) {
-    let randomPoY = Math.floor(Math.random() * (canvas.height - 250));
-    let newObstacle = new obstacles(randomPoY);
-    objectsArr.push(newObstacle);
-    // console.log(newObstacle);
-  }
+
   //Draw the Items when picked in the pie chart
   drawMiddleAndAxis();
   if (scores.money <= 10) {
@@ -299,7 +266,7 @@ let draw = () => {
       scores.leisure -= 1;
     }
   }
-  window.requestAnimationFrame(draw);
+  window.requestAnimationFrame(drawGameBoard);
 };
 
 // Function for moving player right, left, up, down
@@ -334,8 +301,4 @@ function key(e) {
       gameStart = true;
       break;
   }
-}
-
-function startGame() {
-  draw();
 }
