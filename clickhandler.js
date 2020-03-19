@@ -2,13 +2,7 @@
 let canvasLeft = canvas.offsetLeft;
 let canvasTop = canvas.offsetTop;
 // context = elem.getContext('2d'),
-elements = [];
-let element = {
-    top: 400,
-    left: 500,
-    width: 200,
-    height: 50
-}
+
 class btnToClick {
     constructor(top, left, width, height) {
         this.top = top;
@@ -33,23 +27,16 @@ canvas.addEventListener('click', function (event) {
         x > startBtn.left && x < startBtn.left + startBtn.width) {
         startGame();
         gameStart = true;
-
     }
-
-
 }, false);
 
 
 canvas.addEventListener('click', function (event) {
     let x = event.pageX - canvasLeft;
     let y = event.pageY - canvasTop;
-
     // Collision detection between clicked offset and element.
-    // elements.forEach(function (element) {
     if (y > endBtn.top && y < endBtn.top + endBtn.height &&
         x > endBtn.left && x < endBtn.left + endBtn.width) {
         location.reload()
     }
-
-
 }, false);

@@ -60,16 +60,12 @@ let drawEndGame = () => {
     // ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
-    bodyCtx.style.backgroundImage = "url('images /stars.png'),url('images/endGameBg/background.png')";
+    bodyCtx.style.backgroundImage = "url('images/stars.png'),url('images/endGameBg/background.png')";
     drawEndGameBg();
 
   }
   // press space to play the game again
-  document.onkeydown = (e) => {
-    if (e.keyCode === 32) {
-      location.reload();
-    }
-  }
+
   window.requestAnimationFrame(drawEndGame);
 };
 
@@ -298,10 +294,6 @@ function key(e) {
     case 40:
       player.downPressed();
       UpDownDir = true;
-      break;
-    case 13:
-      startGame();
-      gameStart = true;
       break;
   }
 }
