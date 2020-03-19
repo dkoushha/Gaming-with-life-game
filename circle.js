@@ -17,24 +17,10 @@ let drawMiddleAndAxis = () => {
   loveIcon.src = "images/icons/heart-organIcon.png"
   healthIcon.src = "images/icons/van-damme-splitIcon.png"
   entertainmentIcon.src = "images/icons/medieval-pavilionIcon.png"
-  ctx.drawImage(moneyIcon, 230, 255, 50, 50);
-  ctx.drawImage(healthIcon, 230, 55, 50, 50);
-  ctx.drawImage(loveIcon, 20, 55, 50, 50);
-  ctx.drawImage(entertainmentIcon, 20, 255, 50, 50);
-
-  //Y-Axis
-  // ctx.beginPath();
-  // ctx.strokeStyle="black"
-  // ctx.lineWidth=2
-  // //ctx.fillStyle = "black";
-  // ctx.moveTo(150, 20);
-  // ctx.lineTo(150, 280);
-  // ctx.stroke();
-  // //X-Axis
-  // ctx.moveTo(20, 150);
-  // ctx.lineTo(280, 150);
-  // ctx.stroke();
-  // ctx.closePath();
+  ctx.drawImage(moneyIcon, 240, 20, 50, 50);
+  ctx.drawImage(healthIcon, 20, 220, 50, 50);//240,20
+  ctx.drawImage(loveIcon, 20, 20, 50, 50);
+  ctx.drawImage(entertainmentIcon, 240, 220, 50, 50);
 };
 
 class Item {
@@ -120,7 +106,7 @@ let drawItemHealth = score => {
 //To draw 1/4 of a circle in the bottom left side
 //Which is Leisure!
 
-let drawItemLeisure = score => {
+let drawItemEntertainment = score => {
   let startAngleLeisure = Math.PI / 2;
   let endAngleLeisure = 0;
   let colorLeisure = "#fff200";

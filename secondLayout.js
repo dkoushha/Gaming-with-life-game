@@ -55,14 +55,16 @@ let drawEndGame = () => {
   // draw img if the player won
   if (!runningGame && !winGame) {
     drawEndGameBg();
-    // let winImg = new Image();
-    // winImg.src = "images/youwin.png";
-    // ctx.drawImage(winImg, 400, 150, 400, 400);
+    let winImg = new Image();
+    winImg.src = "images/youwin.png";
+    ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
     bodyCtx.style.backgroundImage = "url('images/stars.png'),url('images/endGameBg/background.png')";
     drawEndGameBg();
-
+    let winImg = new Image();
+    winImg.src = "images/gameover.jpg";
+    ctx.drawImage(winImg, 400, 150, 400, 400);
   }
   // press space to play the game again
 
@@ -91,9 +93,6 @@ let scores = {
   entertainment: 0,
   love: 0
 };
-
-// let body = document.getElementsByTagName("body")
-
 
 // function to draw the game on canvas
 let drawGameBoard = () => {
@@ -140,6 +139,7 @@ let drawGameBoard = () => {
       }
 
       if (e.scoreType == "obstacles") {
+        console.log("loser");
         runningGame = false;
         gameOverSound.play();
       }
@@ -148,12 +148,12 @@ let drawGameBoard = () => {
     // draw the object in the array
     if (e.scoreType == "obstacles") {
       //Animation frame counter
-      if (counter % 8 === 0) {
+      if(counter%8===0){
         //To have the acces every %8 frame and update the index in the class obstacle
-        e.currentImageIdx = (e.currentImageIdx + 1) % e.images.length
+        e.currentImageIdx=(e.currentImageIdx+1)%e.images.length
       }
       e.update();
-
+      
     } else {
       e.update();
     }
@@ -226,13 +226,13 @@ let drawGameBoard = () => {
     drawItemMoney(scores.money);
   }
   if (scores.love <= 10) {
-    drawItemLove(scores.love);
+    drawItemLove(scores.love); 
   }
   if (scores.health <= 10) {
     drawItemHealth(scores.health);
   }
   if (scores.entertainment <= 10) {
-    drawItemLeisure(scores.entertainment);
+    drawItemEntertainment(scores.entertainment);
   }
 
   // to win the game
@@ -270,8 +270,6 @@ let drawGameBoard = () => {
 
 document.onkeydown = key
 
-
-// boolean to change the player img according to the direction
 let leftDir = false
 let rightDir = false
 let UpDownDir = false
