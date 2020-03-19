@@ -1,7 +1,7 @@
 // Getting the canvas from html page
 let canvas = document.getElementById("canvas");
 let ctx = document.getElementById("canvas").getContext("2d");
-// let bodyCtx = document.getElementsByTagName("body")
+let bodyCtx = document.querySelector("body")
 
 window.onload = () => {
   firstPage();
@@ -60,7 +60,7 @@ let drawEndGame = () => {
     // ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
-    // bodyCtx.style.background-image = "url('images /l4_buildings01.png' ), url('images /l2_stars.png '),url('images/endGameBg/background.png')";
+    bodyCtx.style.backgroundImage = "url('images /stars.png'),url('images/endGameBg/background.png')";
     drawEndGameBg();
 
   }

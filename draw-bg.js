@@ -5,7 +5,7 @@ imgLamps.src = "images/l7_lamps.png";
 imgBg = new Image();
 imgBg.src = "images/l1_background.png";
 imgStars = new Image();
-imgStars.src = "images/l2_stars.png";
+imgStars.src = "images/stars.png";
 imgSun = new Image();
 imgSun.src = "images/l2_sun.png";
 imgClouds = new Image();
@@ -71,6 +71,4 @@ function drawEndGameBg() {
     ctx.drawImage(this.imgGroundEndGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgLampsEndgame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.btnImgPlayAgain, 500, 430, 200, 50);
-
-
 }
