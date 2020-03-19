@@ -59,6 +59,7 @@ let drawEndGame = () => {
     ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
+    // body.style.background = "url('images / l4_buildings01.png' ), url('images / l2_stars.png '),url('images/endGameBg/background.png')";
     drawEndGameBg();
     let winImg = new Image();
     winImg.src = "images/gameover.jpg";
@@ -95,6 +96,9 @@ let scores = {
   entertainment: 0,
   love: 0
 };
+
+// let body = document.getElementsByTagName("body")
+
 
 // function to draw the game on canvas
 let drawGameBoard = () => {

@@ -60,4 +60,5 @@ function drawEndGameBg() {
     ctx.drawImage(this.imgBuildingEndGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgLampsEndgame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgGroundEndGame, 0, 0, ctx.canvas.width, canvas.height);
+
 }
