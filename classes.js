@@ -32,9 +32,9 @@ let player = {
     },
     // to draw the player on the canvas
     update: function () {
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
+
         ctx.fillStyle = "red";
-        //this.img.src = "images/player/face .png";
+
         this.imgSrc = ["/images/player/face.png", "/images/player/profileboy.png", "/images/player/profilegirl.png"]
         if (gameStart) {
             this.img.src = this.imgSrc[0]
@@ -221,10 +221,10 @@ class obstacles extends object {
     update() {
         //The image will be drawn depending on the frames on secondLayout with its current index
         ctx.drawImage(this.images[this.currentImageIdx], this.x, this.y, this.width, this.height);
-        this.x += this.speedX;   
+        this.x += this.speedX;
     }
-    
 
-        
-    
+
+
+
 }
