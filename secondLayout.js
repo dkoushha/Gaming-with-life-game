@@ -118,18 +118,15 @@ let drawGameBoard = () => {
   drawGameBoardBg()
 
   // draw the player
-
   player.update()
-
-  // Loop inside the array of objects and clear the object from the screen if the player crash wit it
   // and add the score for the object category.
-  // declare the index inside the array for the crash object
   let ind;
   objectsArr.forEach((e, i) => {
     if (player.crash(e)) {
       // add the score
       if (scores[e.scoreType] <= 9) {
         scores[e.scoreType] += 1;
+        console.log(scores[e.scoreType])
       }
       // get the index of the object in the array after the play with it
       ind = i;
@@ -158,15 +155,12 @@ let drawGameBoard = () => {
     // draw the object in the array
     if (e.scoreType == "obstacles") {
       //Animation frame counter
-      animationFrame = ++animationFrame % e.imgSrc.length;
-      e.img.src = e.imgSrc[animationFrame];
+      if(counter%8===0){
+        //To have the acces every %8 frame and update the index in the class obstacle
+        e.currentImageIdx=(e.currentImageIdx+1)%e.images.length
+      }
       e.update();
-
-      //window.requestAnimationFrame(e.update)
-      // setInterval(()=>{
-      //   e.update();
-
-      //  },1000)
+      
     } else {
       e.update();
     }
@@ -250,10 +244,10 @@ let drawGameBoard = () => {
 
   // to win the game
   if (
-    scores.money >= 10 &&
-    scores.love >= 10 &&
-    scores.health >= 10 &&
-    scores.entertainment >= 10
+    scores.money === 10 &&
+    scores.love === 10 &&
+    scores.health === 10 &&
+    scores.entertainment === 10
   ) {
     console.log("winner");
     //Draw winning image
@@ -308,7 +302,7 @@ function key(e) {
       break;
     case 13:
       startGame();
-      gameStart = true
+      gameStart = true;
       break;
   }
 }
