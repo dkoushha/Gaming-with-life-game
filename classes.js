@@ -2,7 +2,7 @@ let player = {
     x: (canvas.width / 2) - 100,
     y: 400,
     width: 200,
-    height: 250,
+    height: 220,
     img: new Image(),
     // to move the player to the right
     rightPressed: function () {
@@ -27,7 +27,7 @@ let player = {
     },
     downPressed: function () {
         if (this.y <= canvas.height - this.height - 20) {
-            this.y += 50;
+            this.y += 90;
         }
     },
     // to draw the player on the canvas
@@ -222,6 +222,18 @@ class obstacles extends object {
         //The image will be drawn depending on the frames on secondLayout with its current index
         ctx.drawImage(this.images[this.currentImageIdx], this.x, this.y, this.width, this.height);
         this.x += this.speedX;
+    }
+    top() {
+        return this.y + 40;
+    }
+    left() {
+        return this.x + 40;
+    }
+    bottom() {
+        return this.y + this.height - 40;
+    }
+    right() {
+        return this.x + this.width - 40;
     }
 
 

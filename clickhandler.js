@@ -8,47 +8,39 @@ class btnToClick {
         this.top = top;
         this.left = left;
         this.width = width;
-        this.height = height
+        this.height = height;
     }
 }
 
-let startBtn = new btnToClick(400, 500, 200, 50)
-let endBtn = new btnToClick(430, 500, 200, 50)
-
+let startBtn = new btnToClick(400, 500, 200, 50);
+let replayBtn = new btnToClick(430, 500, 200, 50);
+let btns = [startBtn, replayBtn];
 
 // Add event listener for `click` events.
-canvas.addEventListener('click', function (event) {
-    let x = event.pageX - canvasLeft;
-    let y = event.pageY - canvasTop;
+canvas.addEventListener(
+    "click",
+    function (event) {
+        let x = event.pageX - canvasLeft;
+        let y = event.pageY - canvasTop;
 
-    // Collision detection between clicked offset and element.
-    // elements.forEach(function (element) {
-    if (y > startBtn.top && y < startBtn.top + startBtn.height &&
-        x > startBtn.left && x < startBtn.left + startBtn.width) {
-        keyEnterSound.play()
-        if (!gameStart) {
-            startGame();
-            gameStart = true;
-        }
-    }
-}, false);
-
-
-canvas.addEventListener('click', function (event) {
-    let x = event.pageX - canvasLeft;
-    let y = event.pageY - canvasTop;
-    keyEnterSound.play()
-
-    // Collision detection between clicked offset and element.
-    if (y > endBtn.top && y < endBtn.top + endBtn.height &&
-        x > endBtn.left && x < endBtn.left + endBtn.width) {
-        keyEnterSound.play()
-
-        if (!runningGame) {
-            keyEnterSound.play()
-            location.reload()
-        }
-
-
-    }
-}, false);
+        // Collision detection between clicked offset and element.
+        btns.forEach(function (btn) {
+            if (
+                y > btn.top &&
+                y < btn.top + btn.height &&
+                x > btn.left &&
+                x < btn.left + btn.width
+            ) {
+                keyEnterSound.play();
+                if (!gameStart) {
+                    startGame();
+                    gameStart = true;
+                }
+                if (!runningGame) {
+                    location.reload();
+                }
+            }
+        });
+    },
+    false
+);

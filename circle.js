@@ -16,9 +16,9 @@ let drawMiddleAndAxis = () => {
   moneyIcon.src = "images/icons/cashIcon.png"
   loveIcon.src = "images/icons/heart-organIcon.png"
   healthIcon.src = "images/icons/van-damme-splitIcon.png"
-  entertainmentIcon.src = "images/icons/medieval-pavilionIcon.png"
+  entertainmentIcon.src = "images/icons/musical-icon.png"
   ctx.drawImage(moneyIcon, 240, 20, 50, 50);
-  ctx.drawImage(healthIcon, 20, 220, 50, 50);//240,20
+  ctx.drawImage(healthIcon, 20, 220, 50, 50); //240,20
   ctx.drawImage(loveIcon, 20, 20, 50, 50);
   ctx.drawImage(entertainmentIcon, 240, 220, 50, 50);
 };

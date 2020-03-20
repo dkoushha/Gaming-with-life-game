@@ -7,16 +7,23 @@ window.onload = () => {
   firstPage();
 };
 
+
 function startGame() {
+  isOutOfFirstPage = true;
   drawGameBoard();
 }
+
+
+
 
 // to draw the first page with bg and text on canvas
 function firstPage() {
   drawFirstBg()
-  let newText = new text(gameStory, 100, 150, 30);
+  let newText = new text(gameStory, 100, 150, 35);
   newText.update(100);
+
 }
+
 
 // function to remove objects from the objects array and from the canvas when they reach the end of the canvas
 function removeObject(objectsArr) {
@@ -55,16 +62,16 @@ let drawEndGame = () => {
   // draw img if the player won
   if (!runningGame && !winGame) {
     drawEndGameBg();
-    // let winImg = new Image();
-    // winImg.src = "images/youwin.png";
-    // ctx.drawImage(winImg, 400, 150, 400, 400);
+    let winImg = new Image();
+    winImg.src = "images/win.png";
+    ctx.drawImage(winImg, 400, 300, 400, 50);
     // draw another img if the player lost
   } else {
     bodyCtx.style.backgroundImage = "url('images/stars.png'),url('images/endGameBg/background.png')";
     drawEndGameBg();
-    // let winImg = new Image();
-    // winImg.src = "images/gameover.jpg";
-    // ctx.drawImage(winImg, 400, 150, 400, 400);
+    let winImg = new Image();
+    winImg.src = "images/lose.png";
+    ctx.drawImage(winImg, 400, 300, 400, 50);
   }
   // press space to play the game again
 
@@ -76,7 +83,8 @@ let runningGame = true;
 
 // for winning the game
 let winGame = true;
-
+// to stop the typing sound from playing
+let isOutOfFirstPage = false
 //Animation frames
 let animationFrame = 0;
 
@@ -101,6 +109,7 @@ let drawGameBoard = () => {
     gameSound.pause();
     return;
   }
+
   gameSound.volume = 0.1
   gameSound.play();
   // clear the canvas
@@ -139,7 +148,6 @@ let drawGameBoard = () => {
       }
 
       if (e.scoreType == "obstacles") {
-        console.log("loser");
         runningGame = false;
         gameOverSound.play();
       }
@@ -148,14 +156,18 @@ let drawGameBoard = () => {
     // draw the object in the array
     if (e.scoreType == "obstacles") {
       //Animation frame counter
+
       if (counter % 8 === 0) {
         //To have the acces every %8 frame and update the index in the class obstacle
         e.currentImageIdx = (e.currentImageIdx + 1) % e.images.length
       }
       e.update();
 
+
     } else {
       e.update();
+
+
     }
   });
 
@@ -214,6 +226,7 @@ let drawGameBoard = () => {
     // if it doesn't collied with any other object to add it to the array
     if (!crashesWithAnything(newObject)) {
       objectsArr.push(newObject);
+
     }
   }
 
@@ -225,6 +238,11 @@ let drawGameBoard = () => {
     if (!crashesWithAnything(newObject)) {
       objectsArr.push(newObject);
     }
+  }
+
+  if (counter <= 120) {
+    ctx.drawImage(directionImg, 500, 200, 200, 200);
+
   }
 
   // to remove the objects from the array after going outside the canvas
