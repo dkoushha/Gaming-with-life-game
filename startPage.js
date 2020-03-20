@@ -40,7 +40,7 @@ class text {
                 ctx.font = "20px Arial";
                 ctx.fillText(this.string.charAt(i), this.x, this.y);
                 typingSound.playbackRate = 1.0
-                typingSound.play()
+                // typingSound.play()
             }
             // to write the command to start the game after writing the story
             // if (j >= this.string.length + 30) {
