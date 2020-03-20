@@ -25,8 +25,11 @@ canvas.addEventListener('click', function (event) {
     // elements.forEach(function (element) {
     if (y > startBtn.top && y < startBtn.top + startBtn.height &&
         x > startBtn.left && x < startBtn.left + startBtn.width) {
-        startGame();
-        gameStart = true;
+        if (!gameStart) {
+            keyEnterSound.play()
+            startGame();
+            gameStart = true;
+        }
     }
 }, false);
 
@@ -37,6 +40,11 @@ canvas.addEventListener('click', function (event) {
     // Collision detection between clicked offset and element.
     if (y > endBtn.top && y < endBtn.top + endBtn.height &&
         x > endBtn.left && x < endBtn.left + endBtn.width) {
-        location.reload()
+        if (!runningGame) {
+            keyEnterSound.play()
+            location.reload()
+        }
+
+
     }
 }, false);

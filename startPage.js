@@ -1,5 +1,6 @@
-let gameStory = " THEY lost their mom in an accident last year. "
-// they went through a depression phase afterward right when they were exploring their gender identity and concerns as well. They asked for an unpaid leave of their job and for long time stayed in bed doing nothing except watching random videos on youtube, eating frozen pizzas and drinking a lot. Now they started to feel better again. They go to therapy and need to watch their both mental and physical health out. They want to bring balance in their life again and get the social life they had back. with working 8 hours per day, attending to events they like, meeting friends and the loved ones, going to gym and eating healthy, good food. It’s not that easy though, but they believe that they could do it. Would you help them on this journey? "
+let gameStory = " The game's Story THEY lost their mom in an accident last year.they went through a depression phase afterward "
+// right when they were exploring their gender identity and concerns as well. They asked for an unpaid leave of their job and for long time stayed in bed doing nothing except watching random videos on youtube, eating frozen pizzas and drinking a lot. Now they started to feel better again. They go to therapy and need to watch their both mental and physical health out. They want to bring balance in their life again and get the social life they had back. with working 8 hours per day, attending to events they like, meeting friends and the loved ones, going to gym and eating healthy,"
+//  good food. It’s not that easy though, but they believe that they could do it. Would you help them on this journey? "
 
 
 
@@ -38,6 +39,8 @@ class text {
                 ctx.fillStyle = "#B1B3B3FF"
                 ctx.font = "20px Arial";
                 ctx.fillText(this.string.charAt(i), this.x, this.y);
+                typingSound.playbackRate = 1.0
+                typingSound.play()
             }
             // to write the command to start the game after writing the story
             // if (j >= this.string.length + 30) {
@@ -51,6 +54,7 @@ class text {
             this.x += letterWidth;
             this.x1 += letterWidth2;
             if (i === this.string.length) {
+                typingSound.pause()
                 clearInterval(typeText);
             }
         }, speed);

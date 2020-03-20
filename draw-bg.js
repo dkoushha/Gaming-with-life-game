@@ -44,8 +44,9 @@ function drawGameBoardBg() {
     ctx.drawImage(this.imgCloudsBoardGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgBuildingBoardGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgBuildings2BoardGame, 0, 0, ctx.canvas.width, canvas.height);
-    ctx.drawImage(this.imgLampsBoardGame, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgGroundBoardGame, 0, 0, ctx.canvas.width, canvas.height);
+    ctx.drawImage(this.imgLampsBoardGame, 0, 0, ctx.canvas.width, canvas.height);
+
 }
 
 imgBuildingEndGame = new Image();

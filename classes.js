@@ -1,14 +1,14 @@
 let player = {
     x: (canvas.width / 2) - 100,
-    y: 500,
+    y: 400,
     width: 200,
-    height: 200,
+    height: 250,
     img: new Image(),
     // to move the player to the right
     rightPressed: function () {
         // to keep it inside the canvas
         if (this.x < canvas.width - this.width) {
-            this.x += 30;
+            this.x += 50;
 
         }
     },
@@ -16,18 +16,18 @@ let player = {
     leftPressed: function () {
         // to keep it inside the canvas
         if (this.x >= 0) {
-            this.x -= 30;
+            this.x -= 50;
 
         }
     },
     upPressed: function () {
         if (this.y >= 50) {
-            this.y -= 30;
+            this.y -= 50;
         }
     },
     downPressed: function () {
         if (this.y <= canvas.height - this.height - 20) {
-            this.y += 30;
+            this.y += 50;
         }
     },
     // to draw the player on the canvas

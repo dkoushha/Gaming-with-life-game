@@ -55,16 +55,16 @@ let drawEndGame = () => {
   // draw img if the player won
   if (!runningGame && !winGame) {
     drawEndGameBg();
-    let winImg = new Image();
-    winImg.src = "images/youwin.png";
-    ctx.drawImage(winImg, 400, 150, 400, 400);
+    // let winImg = new Image();
+    // winImg.src = "images/youwin.png";
+    // ctx.drawImage(winImg, 400, 150, 400, 400);
     // draw another img if the player lost
   } else {
     bodyCtx.style.backgroundImage = "url('images/stars.png'),url('images/endGameBg/background.png')";
     drawEndGameBg();
-    let winImg = new Image();
-    winImg.src = "images/gameover.jpg";
-    ctx.drawImage(winImg, 400, 150, 400, 400);
+    // let winImg = new Image();
+    // winImg.src = "images/gameover.jpg";
+    // ctx.drawImage(winImg, 400, 150, 400, 400);
   }
   // press space to play the game again
 
@@ -148,12 +148,12 @@ let drawGameBoard = () => {
     // draw the object in the array
     if (e.scoreType == "obstacles") {
       //Animation frame counter
-      if(counter%8===0){
+      if (counter % 8 === 0) {
         //To have the acces every %8 frame and update the index in the class obstacle
-        e.currentImageIdx=(e.currentImageIdx+1)%e.images.length
+        e.currentImageIdx = (e.currentImageIdx + 1) % e.images.length
       }
       e.update();
-      
+
     } else {
       e.update();
     }
@@ -199,15 +199,25 @@ let drawGameBoard = () => {
     // loop inside the objects array to change y speed
     objectsArr.forEach(e => {
       if (e.speedY === 2) {
-        e.speedY = 3;
+        e.speedY = 6;
       }
       if (e.speedY === 3) {
-        e.speedY = 2;
+        e.speedY = 1;
       }
     });
   }
 
   if (counter % 500 === 0) {
+    // for loop to great more than one object
+    let randomPoY = Math.floor(Math.random() * (canvas.height - 250));
+    let newObject = new obstacles(randomPoY);
+    // if it doesn't collied with any other object to add it to the array
+    if (!crashesWithAnything(newObject)) {
+      objectsArr.push(newObject);
+    }
+  }
+
+  if (counter % 700 === 0) {
     // for loop to great more than one object
     let randomPoY = Math.floor(Math.random() * (canvas.height - 250));
     let newObject = new obstacles(randomPoY);
@@ -226,7 +236,7 @@ let drawGameBoard = () => {
     drawItemMoney(scores.money);
   }
   if (scores.love <= 10) {
-    drawItemLove(scores.love); 
+    drawItemLove(scores.love);
   }
   if (scores.health <= 10) {
     drawItemHealth(scores.health);
