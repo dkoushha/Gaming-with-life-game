@@ -12,6 +12,8 @@ imgClouds = new Image();
 imgClouds.src = "images/l4_clouds.png";
 btnImgStartGame = new Image()
 btnImgStartGame.src = "images/Start-game.png"
+keyboardArrows = new Image()
+keyboardArrows.src = "/images/keyboard_arrows.png"
 
 
 function drawFirstBg() {
@@ -20,7 +22,7 @@ function drawFirstBg() {
     ctx.drawImage(this.imgBuilding, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgLamps, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.btnImgStartGame, 500, 400, 200, 50);
-
+    ctx.drawImage(this.keyboardArrows,540, 500, 120, 80);
 }
 
 imgBuildingBoardGame = new Image();

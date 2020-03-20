@@ -14,7 +14,7 @@ function startGame() {
 // to draw the first page with bg and text on canvas
 function firstPage() {
   drawFirstBg()
-  let newText = new text(gameStory, 100, 150, 30);
+  let newText = new text(gameStory, 100, 150, 35);
   newText.update(100);
 }
 
