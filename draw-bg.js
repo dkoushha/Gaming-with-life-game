@@ -10,6 +10,8 @@ imgSun = new Image();
 imgSun.src = "images/l2_sun.png";
 imgClouds = new Image();
 imgClouds.src = "images/l4_clouds.png";
+imgGround = new Image();
+imgGround.src = "images/gameCityBg/ground.png";
 btnImgStartGame = new Image()
 btnImgStartGame.src = "images/Start-game.png"
 keyboardArrows = new Image()
@@ -20,6 +22,7 @@ function drawFirstBg() {
     ctx.drawImage(this.imgBg, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgStars, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgBuilding, 0, 0, ctx.canvas.width, canvas.height);
+    ctx.drawImage(this.imgGround, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.imgLamps, 0, 0, ctx.canvas.width, canvas.height);
     ctx.drawImage(this.btnImgStartGame, 500, 400, 200, 50);
     // ctx.drawImage(this.keyboardArrows, 540, 500, 120, 80);

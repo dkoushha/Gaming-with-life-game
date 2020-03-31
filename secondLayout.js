@@ -147,6 +147,7 @@ let drawGameBoard = () => {
       }
     }
 
+
     // draw the object in the array
     if (e.scoreType == "obstacles") {
       //Animation frame counter
@@ -183,7 +184,9 @@ let drawGameBoard = () => {
         return new objectEntertainment(randomPoX);
     }
   }
-
+  if (counter === 180000) {
+    runningGame = false;
+  }
   // draw 3 random objects on canvas
   if (counter % 120 === 0) {
     // for loop to great more than one object
@@ -201,10 +204,10 @@ let drawGameBoard = () => {
     // loop inside the objects array to change y speed
     objectsArr.forEach(e => {
       if (e.speedY === 2) {
-        e.speedY = 6;
+        e.speedY = 4;
       }
       if (e.speedY === 3) {
-        e.speedY = 1;
+        e.speedY = 2;
       }
     });
   }
@@ -228,6 +231,7 @@ let drawGameBoard = () => {
       objectsArr.push(newObject);
     }
   }
+
 
   if (counter <= 120) {
     ctx.drawImage(directionImg, 500, 200, 200, 200);

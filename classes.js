@@ -1,5 +1,23 @@
+let imgSrc = [
+    "images/player/face.png",
+    "images/player/profileboy.png",
+    "images/player/profilegirl.png"
+];
+
+let imgArr = [];
+let imgFace = new Image()
+imgFace.src = imgSrc[0]
+imgArr.push(imgFace)
+let imgLeft = new Image()
+imgLeft.src = imgSrc[2]
+imgArr.push(imgLeft)
+let imgRight = new Image()
+imgRight.src = imgSrc[1]
+imgArr.push(imgRight)
+
+
 let player = {
-    x: (canvas.width / 2) - 100,
+    x: canvas.width / 2 - 100,
     y: 400,
     width: 200,
     height: 220,
@@ -7,9 +25,8 @@ let player = {
     // to move the player to the right
     rightPressed: function () {
         // to keep it inside the canvas
-        if (this.x < canvas.width - this.width) {
+        if (this.x < canvas.width - this.width + 40) {
             this.x += 50;
-
         }
     },
     // to move the player to the left
@@ -17,46 +34,44 @@ let player = {
         // to keep it inside the canvas
         if (this.x >= 0) {
             this.x -= 50;
-
         }
     },
     upPressed: function () {
-        if (this.y >= 50) {
-            this.y -= 50;
+        if (this.y >= 5) {
+            this.y -= 40;
         }
     },
     downPressed: function () {
-        if (this.y <= canvas.height - this.height - 20) {
-            this.y += 90;
+        if (this.y <= canvas.height - this.height) {
+            this.y += 40;
         }
     },
     // to draw the player on the canvas
     update: function () {
-
         ctx.fillStyle = "red";
 
-        this.imgSrc = ["/images/player/face.png", "/images/player/profileboy.png", "/images/player/profilegirl.png"]
+
         if (gameStart) {
-            this.img.src = this.imgSrc[0]
-            gameStart = false
+            this.img = imgArr[0];
+            gameStart = false;
         }
         if (UpDownDir) {
-            this.img.src = this.imgSrc[0]
-            UpDownDir = false
+            this.img = imgArr[0];
+            UpDownDir = false;
         }
         if (leftDir) {
-            this.img.src = this.imgSrc[2]
-            leftDir = false
+            this.img = imgArr[1];
+            leftDir = false;
         }
         if (rightDir) {
-            this.img.src = this.imgSrc[1]
-            rightDir = false
+            this.img = imgArr[2];
+            rightDir = false;
         }
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     },
     // declare the player borders
     left: function () {
-        return this.x + 80;
+        return this.x + 30;
     },
     top: function () {
         return this.y + 30;
@@ -138,7 +153,7 @@ class objectHealth extends object {
             "images/health/avocado.png",
             "images/health/canned-fish.png",
             "images/health/cycling.png",
-            "images/health/hot-meal.png",
+            "images/health/hot-meal.png"
         ];
         this.img.src = this.imgSrc[Math.floor(Math.random() * this.imgSrc.length)];
         this.scoreType = "health";
@@ -197,7 +212,7 @@ class obstacles extends object {
         this.height = 150;
         this.speedX = 4;
         //this index will be changes from 0 to 7 with a certain frame
-        this.currentImageIdx = 0
+        this.currentImageIdx = 0;
         this.imgSrc = [
             "/images/animation/Run (1).png",
             "/images/animation/Run (2).png",
@@ -209,34 +224,36 @@ class obstacles extends object {
             "/images/animation/Run (8).png"
         ];
         //In this empty array the new Image is created with its source
-        this.images = []
-        this.imgSrc.forEach((src) => {
-            let i = new Image()
-            i.src = src
-            this.images.push(i)
-        })
+        this.images = [];
+        this.imgSrc.forEach(src => {
+            let i = new Image();
+            i.src = src;
+            this.images.push(i);
+        });
         this.scoreType = "obstacles";
     }
     // Override update form parent to make enemies move horizontal
     update() {
         //The image will be drawn depending on the frames on secondLayout with its current index
-        ctx.drawImage(this.images[this.currentImageIdx], this.x, this.y, this.width, this.height);
+        ctx.drawImage(
+            this.images[this.currentImageIdx],
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        );
         this.x += this.speedX;
     }
     top() {
-        return this.y + 40;
+        return this.y + 20;
     }
     left() {
-        return this.x + 40;
+        return this.x + 20;
     }
     bottom() {
-        return this.y + this.height - 40;
+        return this.y + this.height - 20;
     }
     right() {
-        return this.x + this.width - 40;
+        return this.x + this.width - 20;
     }
-
-
-
-
 }
