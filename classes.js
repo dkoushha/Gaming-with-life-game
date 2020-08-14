@@ -26,24 +26,24 @@ let player = {
     rightPressed: function () {
         // to keep it inside the canvas
         if (this.x < canvas.width - this.width + 40) {
-            this.x += 50;
+            this.x += 100;
         }
     },
     // to move the player to the left
     leftPressed: function () {
         // to keep it inside the canvas
         if (this.x >= 0) {
-            this.x -= 50;
+            this.x -= 100;
         }
     },
     upPressed: function () {
         if (this.y >= 5) {
-            this.y -= 40;
+            this.y -= 100;
         }
     },
     downPressed: function () {
         if (this.y <= canvas.height - this.height) {
-            this.y += 40;
+            this.y += 100;
         }
     },
     // to draw the player on the canvas
